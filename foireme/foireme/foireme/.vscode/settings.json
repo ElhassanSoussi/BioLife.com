@@ -1,8 +1,0 @@
-{
-    "chatgpt.openOnStartup": true,
-    "chatgpt.config": {
-        
-    },
-    "chatgpt.commentCodeLensEnabled": true,
-    "CodeGPT.apiKey": "OpenAI"
-}
