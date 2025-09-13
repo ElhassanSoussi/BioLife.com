@@ -10,6 +10,22 @@ async function fetchJSON(url) {
   return res.json();
 }
 
+// Fallback dataset for file:// preview or fetch failures
+const FALLBACK_CATALOG = {
+  categories: [
+    { id: 'skincare', name: 'Skincare', parent: null },
+    { id: 'makeup', name: 'Makeup', parent: null },
+    { id: 'gifts', name: 'Gifts', parent: null }
+  ],
+  products: [
+    { id: 'p001', name: 'Hydrating Serum', brand: 'Foireme', price: 29, currency: 'USD', stock_count: 42, category_ids: ['skincare'], tags: ['hydration','serum','clean'], image: 'https://images.unsplash.com/photo-1611930022073-b7ecc1cf5aff?q=80&w=800&auto=format&fit=crop', metadata: { created_at: '2025-08-20', views: 1200, clicks: 150, views7d:450, clicks7d:60, margin_pct: 62 }, gallery: ["https://images.unsplash.com/photo-1611930022073-b7ecc1cf5aff?q=80&w=800&auto=format&fit=crop"], ingredients: ["Water","Hyaluronic Acid","Glycerin"], benefits: ["Plumps","Hydrates","Smooths"] },
+    { id: 'p004', name: 'Velvet Matte Lipstick', brand: 'Foireme', price: 18, currency: 'USD', stock_count: 120, category_ids: ['makeup'], tags: ['lip','vegan','bestseller'], image: 'https://images.unsplash.com/photo-1541643600914-78b084683601?q=80&w=800&auto=format&fit=crop', metadata: { created_at: '2025-08-28', views: 3200, clicks: 520, views7d: 900, clicks7d: 140, margin_pct: 70 }, gallery: ["https://images.unsplash.com/photo-1541643600914-78b084683601?q=80&w=800&auto=format&fit=crop"], ingredients: ["Castor Oil","Vitamin E"], benefits: ["Comfort-matte","Long wear"] },
+    { id: 'p006', name: 'Holiday Self-Care Set', brand: 'Foireme', price: 49, currency: 'USD', stock_count: 35, category_ids: ['gifts'], tags: ['giftset','bestseller'], image: 'https://images.unsplash.com/photo-1519682577862-22b62b24e493?q=80&w=800&auto=format&fit=crop', metadata: { created_at: '2025-09-05', views: 2400, clicks: 310, views7d: 1200, clicks7d: 180, margin_pct: 60 }, gallery: ["https://images.unsplash.com/photo-1519682577862-22b62b24e493?q=80&w=800&auto=format&fit=crop"], benefits: ["Gift ready","Great value"] }
+  ]
+};
+
+const FALLBACK_MERCH = { pin: ['p006'], boost: [{type:'tag', value:'bestseller', weight:1.25}] };
+
 function currencyFormat(value, currency = 'USD') {
   try { return new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(value); }
   catch { return `$${value.toFixed(2)}`; }
@@ -146,9 +162,13 @@ function cardHTML(p) {
 function productDetailHTML(p) {
   const price = currencyFormat(p.price, p.currency);
   const tags = (p.tags || []).map(t => `<span class="tag">${t}</span>`).join('');
+  const gallery = Array.isArray(p.gallery) && p.gallery.length ? p.gallery : [p.image];
+  const ingredients = Array.isArray(p.ingredients) ? `<ul>${p.ingredients.map(i=>`<li>${i}</li>`).join('')}</ul>` : (p.ingredients || '');
+  const benefits = Array.isArray(p.benefits) ? `<ul>${p.benefits.map(i=>`<li>${i}</li>`).join('')}</ul>` : (p.benefits || '');
   return `
-    <div class="product-media">
-      <img src="${p.image}" alt="${p.name}">
+    <div class="product-media gallery">
+      <img class="main" src="${gallery[0]}" alt="${p.name}">
+      <div class="thumbs">${gallery.map((src,i)=>`<img src="${src}" alt="${p.name} image ${i+1}" data-src="${src}" class="${i===0?'active':''}">`).join('')}</div>
     </div>
     <div class="product-info">
       <div class="brand">${p.brand}</div>
@@ -157,7 +177,31 @@ function productDetailHTML(p) {
       <p>${p.description || ''}</p>
       ${tags ? `<div class="tags">${tags}</div>` : ''}
       <button class="btn" type="button">Add to cart</button>
+      <div class="tabs">
+        <div class="tab-buttons">
+          <button type="button" data-tab="details" class="active">Details</button>
+          <button type="button" data-tab="ingredients">Ingredients</button>
+          <button type="button" data-tab="benefits">Benefits</button>
+        </div>
+        <div id="tab-details" class="tab-panel active"><p>${p.description || '—'}</p></div>
+        <div id="tab-ingredients" class="tab-panel">${ingredients || '—'}</div>
+        <div id="tab-benefits" class="tab-panel">${benefits || '—'}</div>
+      </div>
     </div>`;
+}
+
+function renderSkeletons(root, count = 8) {
+  if (!root) return;
+  const html = Array.from({length: count}).map(()=>`
+    <div class="skeleton-card">
+      <div class="skeleton media"></div>
+      <div class="text">
+        <div class="skeleton line" style="width:70%"></div>
+        <div class="skeleton line" style="width:40%"></div>
+      </div>
+    </div>
+  `).join('');
+  root.innerHTML = html;
 }
 
 async function loadAndRender() {
@@ -165,11 +209,20 @@ async function loadAndRender() {
   const detailEl = document.getElementById('product-detail');
   const isSearch = document.getElementById('search-results') !== null;
   if (grids.length === 0 && !isSearch && !detailEl) return; // nothing to do on this page
+  // Show skeletons early
+  for (const g of grids) renderSkeletons(g);
 
-  const [catalog, merch] = await Promise.all([
-    fetchJSON(CATALOG_URL),
-    fetchJSON(MERCH_URL).catch(() => ({}))
-  ]);
+  let catalog, merch;
+  try {
+    [catalog, merch] = await Promise.all([
+      fetchJSON(CATALOG_URL),
+      fetchJSON(MERCH_URL).catch(() => ({}))
+    ]);
+  } catch (e) {
+    console.warn('Falling back to embedded catalog due to fetch error', e);
+    catalog = FALLBACK_CATALOG;
+    merch = FALLBACK_MERCH;
+  }
   let products = catalog.products || [];
 
   // Apply merchandising scores (boost/demote) as a multiplicative factor used in sorts as tie-breaker
@@ -195,6 +248,25 @@ async function loadAndRender() {
       detailEl.innerHTML = '<p>Product not found.</p>';
     } else {
       detailEl.innerHTML = productDetailHTML(product);
+      // thumbs interaction
+      const main = detailEl.querySelector('.product-media .main');
+      detailEl.querySelectorAll('.thumbs img').forEach(img => {
+        img.addEventListener('click', () => {
+          detailEl.querySelectorAll('.thumbs img').forEach(i=>i.classList.remove('active'));
+          img.classList.add('active');
+          main.src = img.dataset.src;
+        });
+      });
+      // tabs interaction
+      const btns = detailEl.querySelectorAll('.tab-buttons button');
+      btns.forEach(btn => btn.addEventListener('click', () => {
+        btns.forEach(b=>b.classList.remove('active'));
+        detailEl.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+        btn.classList.add('active');
+        const id = 'tab-' + btn.dataset.tab;
+        const panel = detailEl.querySelector('#'+id);
+        if (panel) panel.classList.add('active');
+      }));
       const related = relatedByTags(product, products)
         .filter(p => (merchScore.get(p.id) ?? 1) > 0)
         .slice(0, 8);
