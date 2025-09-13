@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Membership – Foireme</title>
   <link rel="stylesheet" href="css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 <header class="site-header">
@@ -21,7 +24,9 @@
         <a href="membership.html" aria-current="page">Membership</a>
       </nav>
       <div class="actions">
-        <input type="text" placeholder="Search…" aria-label="Search">
+        <form class="search" action="search.html" method="get">
+          <input type="text" name="q" placeholder="Search…" aria-label="Search">
+        </form>
         <a href="login.html" class="signin">Sign in</a>
         <a href="cart.html" class="cart">Cart (0)</a>
       </div>
