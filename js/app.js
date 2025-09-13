@@ -132,7 +132,7 @@ function cardHTML(p) {
   if ((p.metadata?.created_at) && (Date.now() - parseDate(p.metadata.created_at)) / (1000*60*60*24) <= 14) badges.push('New');
   if ((p.tags || []).includes('bestseller')) badges.push('Best');
   return `
-    <a class="product-card" href="#" aria-label="${p.name}">
+    <a class="product-card" href="product.html?id=${encodeURIComponent(p.id)}" aria-label="${p.name}">
       <img src="${p.image}" alt="${p.name}">
       <div class="info">
         <div class="brand">${p.brand}</div>
@@ -143,10 +143,28 @@ function cardHTML(p) {
     </a>`;
 }
 
+function productDetailHTML(p) {
+  const price = currencyFormat(p.price, p.currency);
+  const tags = (p.tags || []).map(t => `<span class="tag">${t}</span>`).join('');
+  return `
+    <div class="product-media">
+      <img src="${p.image}" alt="${p.name}">
+    </div>
+    <div class="product-info">
+      <div class="brand">${p.brand}</div>
+      <div class="name">${p.name}</div>
+      <div class="price">${price}</div>
+      <p>${p.description || ''}</p>
+      ${tags ? `<div class="tags">${tags}</div>` : ''}
+      <button class="btn" type="button">Add to cart</button>
+    </div>`;
+}
+
 async function loadAndRender() {
-  const grid = document.getElementById('product-grid');
+  const grids = Array.from(document.querySelectorAll('.product-grid'));
+  const detailEl = document.getElementById('product-detail');
   const isSearch = document.getElementById('search-results') !== null;
-  if (!grid && !isSearch) return; // nothing to do on this page
+  if (grids.length === 0 && !isSearch && !detailEl) return; // nothing to do on this page
 
   const [catalog, merch] = await Promise.all([
     fetchJSON(CATALOG_URL),
@@ -170,21 +188,38 @@ async function loadAndRender() {
     return;
   }
 
-  // Category or curated list
-  const category = grid.dataset.category;
-  const list = grid.dataset.list; // new | best | trending
-  let subset = products;
-  if (category) subset = filterByCategory(products, category);
-  if (list === 'new') subset = sortByNew(subset);
-  else if (list === 'best') subset = sortByBest(subset);
-  else if (list === 'trending') subset = sortByTrending(subset);
+  if (detailEl) {
+    const id = getQueryParam('id');
+    const product = products.find(p => p.id === id);
+    if (!product) {
+      detailEl.innerHTML = '<p>Product not found.</p>';
+    } else {
+      detailEl.innerHTML = productDetailHTML(product);
+      const related = relatedByTags(product, products)
+        .filter(p => (merchScore.get(p.id) ?? 1) > 0)
+        .slice(0, 8);
+      const relatedGrid = document.getElementById('related-grid');
+      if (relatedGrid) renderGrid(relatedGrid, related);
+    }
+  }
 
-  // Apply merchandising pin to final ordering
-  subset = pinFirst(subset, merch)
-    .filter(p => (merchScore.get(p.id) ?? 1) > 0)
-    .slice(0, 24);
+  for (const grid of grids) {
+    // Category or curated list
+    const category = grid.dataset.category;
+    const list = grid.dataset.list; // new | best | trending
+    let subset = products;
+    if (category) subset = filterByCategory(products, category);
+    if (list === 'new') subset = sortByNew(subset);
+    else if (list === 'best') subset = sortByBest(subset);
+    else if (list === 'trending') subset = sortByTrending(subset);
 
-  renderGrid(grid, subset);
+    // Apply merchandising pin to final ordering
+    subset = pinFirst(subset, merch)
+      .filter(p => (merchScore.get(p.id) ?? 1) > 0)
+      .slice(0, 24);
+
+    renderGrid(grid, subset);
+  }
 }
 
 function renderGrid(root, items) {
@@ -198,4 +233,3 @@ document.addEventListener('DOMContentLoaded', () => {
     console.error(err);
   });
 });
-
