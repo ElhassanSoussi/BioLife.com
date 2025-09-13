@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard – Foireme</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    body { margin:0; font-family: "Helvetica Neue", Arial, sans-serif; }
+    .admin-container { display:flex; min-height:100vh; }
+    .sidebar { width:240px; background:#f9f9f9; border-right:1px solid #eee; padding:1rem; }
+    .sidebar h2 { font-size:1.2rem; margin-bottom:1rem; }
+    .sidebar nav { display:flex; flex-direction:column; gap:0.5rem; }
+    .sidebar nav a { text-decoration:none; color:#333; padding:0.5rem 0.75rem; border-radius:4px; }
+    .sidebar nav a:hover { background:#eee; }
+    .main-content { flex:1; padding:2rem; }
+    .metrics { display:grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap:1rem; margin-bottom:2rem; }
+    .card { background:#fafafa; padding:1rem; border:1px solid #eee; border-radius:6px; }
+    .card h3 { margin:0 0 0.5rem 0; font-size:1rem; color:#666; }
+    .card p { margin:0; font-size:1.5rem; font-weight:bold; }
+    table { width:100%; border-collapse:collapse; }
+    th, td { padding:0.75rem; border-bottom:1px solid #eee; text-align:left; }
+    th { background:#f5f5f5; }
+  </style>
+</head>
+<body>
+  <div class="admin-container">
+    <aside class="sidebar">
+      <h2>Admin</h2>
+      <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="products.html">Products</a>
+        <a href="orders.html">Orders</a>
+        <a href="customers.html">Customers</a>
+        <a href="analytics.html">Analytics</a>
+        <a href="settings.html">Settings</a>
+      </nav>
+    </aside>
+    <main class="main-content">
+      <h1>Dashboard</h1>
+      <div class="metrics">
+        <div class="card">
+          <h3>Sales</h3>
+          <p>$0</p>
+        </div>
+        <div class="card">
+          <h3>Orders</h3>
+          <p>0</p>
+        </div>
+        <div class="card">
+          <h3>Customers</h3>
+          <p>0</p>
+        </div>
+        <div class="card">
+          <h3>Conversion Rate</h3>
+          <p>0%</p>
+        </div>
+      </div>
+      <h2>Recent Orders</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Order #</th>
+            <th>Customer</th>
+            <th>Date</th>
+            <th>Total</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td colspan="5">No orders yet</td>
+          </tr>
+        </tbody>
+      </table>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foireme - Home</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="header-grid">
+    <div></div>
+    <div class="logo">FOIREME</div>
+    <div class=right">
+      <nav class="nav">
+              <a href="skincare.html">Skincare</a>
+        <a href="makeup.html">Makeup</a>
+        <a href="gifts.html">Gifts</a>
+        <a href="new-arrivals.html">New Arrivals</a>
+        <a href="blog.html">Blog</a>
+        <a href="membership.html">Membership</a>
+      </nav>
+      <div class="actions">
+        <input type="text" placeholder="Search..." aria-label="Search">
+        <a href="login.html" class="signin">Sign in</a>
+        <a href="cart.html" class="cart">Cart (0)</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <h1>Welcome to Foireme</h1>
+    <p>Redefining Beauty & Care</p>
+    <a href="skincare.html" class="btn">Shop Now</a>
+  </section>
+
+  <section class="categories-grid">
+    <a href="skincare.html" class="category-card">Skincare</a>
+    <a href="makeup.html" class="category-card">Makeup</a>
+    <a href="gifts.html" class="category-card">Gifts</a>
+    <a href="new-arrivals.html" class="category-card">New Arrivals</a>
+  </section>
+<</main>
+<script>
+  document.querySelectorAll('.nav a').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      var href = this.getAttribute('href');
+      if (href.startsWith('#')) {
+        e.preventDefault();
+        window.location.href = href.substring(1);
+      }
+    });
+  });
+</script>
+</body>
+</html>
+
+</body>
+</html>
