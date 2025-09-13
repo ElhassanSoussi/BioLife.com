@@ -9,6 +9,8 @@ body {
   background: #fff;
   color: #000;
 }
+a { color: inherit; }
+a:focus { outline: none; box-shadow: 0 0 0 2px #0002; border-radius: 4px; }
 /* Utility */
 .btn {
   display: inline-block;
@@ -49,6 +51,11 @@ body {
   text-decoration: none;
   color: #000;
   font-size: 0.9rem;
+}
+.nav a[aria-current="page"],
+.actions a[aria-current="page"] {
+  font-weight: 700;
+  border-bottom: 2px solid #000;
 }
 .nav a:hover {
   text-decoration: underline;
@@ -115,4 +122,39 @@ p {
 .category-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+/* Footer */
+.site-footer {
+  margin-top: 3rem;
+  border-top: 1px solid #e5e5e5;
+  background: #fafafa;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+}
+.site-footer h3 {
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+}
+.site-footer p { color: #444; }
+.site-footer ul { list-style: none; padding: 0; }
+.site-footer li { margin: 0.4rem 0; }
+.site-footer a { text-decoration: none; color: #222; }
+.site-footer a:hover { text-decoration: underline; }
+.newsletter { display: flex; gap: 0.5rem; }
+.newsletter input[type="email"] {
+  flex: 1;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+.footer-bottom {
+  padding: 0.75rem 2rem;
+  border-top: 1px solid #e5e5e5;
+  font-size: 0.9rem;
+  color: #666;
 }
