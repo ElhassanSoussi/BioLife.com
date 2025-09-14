@@ -132,7 +132,8 @@
               <img src="${p.image}" alt="${p.alt || p.name}" width="600" height="600" loading="lazy" />
               ${badges ? `<div class="badges">${badges}</div>` : ''}
               <div class="quickadd">
-                <button class="btn btn--primary btn--sm" type="button" aria-label="Quick add ${p.name}">Quick Add</button>
+                <button class="btn btn--primary btn--sm js-add" data-id="${pid}" type="button" aria-label="Quick add ${p.name}">Quick Add</button>
+                <button class="btn btn--sm js-view" data-id="${pid}" type="button" aria-label="Quick view ${p.name}" style="background:#fff;border:1px solid var(--divider);color:var(--ink)">Quick View</button>
               </div>
             </div>
             <div class="card__body">
@@ -151,5 +152,68 @@
   }
 
   render(products);
-})();
 
+  // Cart counter wiring
+  const CART_KEY = 'foireme_cart_count';
+  const getCart = () => parseInt(localStorage.getItem(CART_KEY) || '0', 10);
+  const setCart = (n) => localStorage.setItem(CART_KEY, String(n));
+  const badge = document.querySelector('.cart__count');
+  if (badge) badge.textContent = String(getCart());
+
+  document.addEventListener('click', (e) => {
+    const addBtn = e.target.closest('.js-add');
+    const viewBtn = e.target.closest('.js-view');
+    if (addBtn) {
+      const next = getCart() + 1;
+      setCart(next);
+      if (badge) badge.textContent = String(next);
+    }
+    if (viewBtn) {
+      const id = viewBtn.getAttribute('data-id');
+      const p = products.find(x => (x.id || '') === id || (('p'+(products.indexOf(x)+1)) === id));
+      if (p) openModal(p);
+    }
+  });
+
+  // Search expand toggle
+  const search = document.querySelector('.search--compact');
+  const toggle = document.querySelector('.search__toggle');
+  if (search && toggle) {
+    toggle.addEventListener('click', () => search.classList.toggle('is-open'));
+  }
+
+  // Quick View modal
+  function openModal(p){
+    let el = document.getElementById('quickview');
+    if (!el){
+      el = document.createElement('div');
+      el.id = 'quickview';
+      el.className = 'modal';
+      el.innerHTML = `
+        <div class="modal__overlay" data-dismiss></div>
+        <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="qv-title">
+          <button class="modal__close" data-dismiss aria-label="Close">×</button>
+          <div class="modal__content"></div>
+        </div>`;
+      document.body.appendChild(el);
+      el.addEventListener('click', (e)=>{ if(e.target.matches('[data-dismiss]')) closeModal(); });
+      el.querySelector('.modal__close').addEventListener('click', closeModal);
+    }
+    const content = el.querySelector('.modal__content');
+    content.innerHTML = `
+      <div class="qv">
+        <img src="${p.image}" alt="${p.alt || p.name}" width="320" height="320" class="qv__img" />
+        <div class="qv__info">
+          <h3 id="qv-title">${p.name}</h3>
+          <div class="rating"><span class="stars" style="--rating:${p.rating}">★★★★★</span><span class="rating__count">(${p.reviews})</span></div>
+          <div class="card__meta"><span class="price">$${p.price}</span></div>
+          <button class="btn btn--primary btn--sm js-add" data-id="${p.id}">Add to Cart</button>
+        </div>
+      </div>`;
+    el.classList.add('is-open');
+  }
+  function closeModal(){
+    const el = document.getElementById('quickview');
+    if (el) el.classList.remove('is-open');
+  }
+})();

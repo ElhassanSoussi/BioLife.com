@@ -116,6 +116,11 @@ body {
   width: clamp(180px, 20vw, 260px);
   flex: 0 0 auto;
 }
+.search--compact{ width: 42px; height: 42px; border: 1px solid var(--divider); border-radius: 999px; display: grid; grid-auto-flow: column; align-items: center; gap: 8px; padding: 0 8px; overflow: hidden; background: var(--surface); }
+.search--compact .search__input{ width: 0; opacity: 0; border: none; background: transparent; padding: 0; }
+.search--compact .search__toggle{ appearance: none; border: none; background: transparent; color: var(--muted); display: grid; place-items: center; width: 28px; height: 28px; cursor: pointer; }
+.search--compact.is-open{ width: 240px; }
+.search--compact.is-open .search__input{ width: 100%; opacity: 1; padding: 8px; border-radius: 999px; border: none; outline: none; color: var(--ink); }
 .search__icon{
   position: absolute;
   left: 12px;
@@ -511,3 +516,13 @@ body {
 @media (max-width: 600px){
   .footer-grid{ grid-template-columns: 1fr; }
 }
+
+/* Modal */
+.modal{ position: fixed; inset: 0; display: none; z-index: 200; }
+.modal.is-open{ display: block; }
+.modal__overlay{ position: absolute; inset: 0; background: rgba(0,0,0,0.4); }
+.modal__dialog{ position: relative; max-width: min(720px, 92vw); margin: 10vh auto; background: #fff; border: 1px solid var(--divider); border-radius: 16px; box-shadow: var(--shadow); padding: 16px; }
+.modal__close{ position: absolute; top: 8px; right: 8px; border: none; background: #fff; border: 1px solid var(--divider); width: 32px; height: 32px; border-radius: 999px; cursor: pointer; }
+.qv{ display: grid; grid-template-columns: 1fr 1.2fr; gap: 16px; align-items: center; }
+.qv__img{ border: 1px solid var(--divider); border-radius: 12px; background: #fff; object-fit: contain; width: 100%; height: auto; }
+@media (max-width: 680px){ .qv{ grid-template-columns: 1fr; } }
