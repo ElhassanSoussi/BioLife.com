@@ -1,6 +1,41 @@
 // Temporary hardcoded product data and renderer
 // Replace these with real images/data later.
 (function () {
+  // Load promos config
+  async function loadPromos(){
+    try{ const res = await fetch('data/promos.json', { cache: 'no-store' }); if (!res.ok) return null; return await res.json(); }catch{ return null; }
+  }
+
+  function renderGlobalPromo(cfg){
+    if (!cfg || !cfg.global || !cfg.global.enabled) return;
+    const dismissed = localStorage.getItem('foireme_promo_global_dismissed') === '1';
+    if (dismissed && cfg.global.dismissible) return;
+    const bar = document.createElement('div');
+    bar.className = 'promo-bar';
+    bar.setAttribute('role','region');
+    bar.setAttribute('aria-label','Site announcement');
+    bar.style.background = cfg.global.bg || '#111';
+    bar.innerHTML = `<div class="promo-bar__inner container">
+      <div class="promo-bar__text">${cfg.global.link ? `<a href="${cfg.global.link}" style="color:${cfg.global.fg||'#fff'}; text-decoration: none;">${cfg.global.text}</a>` : `<span style="color:${cfg.global.fg||'#fff'}">${cfg.global.text}</span>`}</div>
+      ${cfg.global.dismissible ? '<button class="promo-bar__close" aria-label="Dismiss">×</button>' : ''}
+    </div>`;
+    document.body.prepend(bar);
+    requestAnimationFrame(()=> bar.classList.add('is-show'));
+    const close = bar.querySelector('.promo-bar__close');
+    if (close){ close.addEventListener('click', ()=>{ bar.remove(); localStorage.setItem('foireme_promo_global_dismissed','1'); }); }
+  }
+
+  function applyHomepageHero(cfg){
+    if (!cfg || !cfg.homepage_hero || !cfg.homepage_hero.enabled) return;
+    const title = document.querySelector('.hero__title');
+    const subtitle = document.querySelector('.hero__subtitle');
+    const cta = document.querySelector('.hero .btn.btn--primary');
+    if (title) title.textContent = cfg.homepage_hero.title || title.textContent;
+    if (subtitle) subtitle.textContent = cfg.homepage_hero.subtitle || subtitle.textContent;
+    if (cta && cfg.homepage_hero.cta){ cta.textContent = cfg.homepage_hero.cta.label || cta.textContent; cta.setAttribute('href', cfg.homepage_hero.cta.href || cta.getAttribute('href')); }
+  }
+
+  loadPromos().then(cfg => { renderGlobalPromo(cfg); applyHomepageHero(cfg); });
   const allProducts = [
     {
       id: 'p1',

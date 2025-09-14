@@ -1,0 +1,43 @@
+{
+  "global": {
+    "enabled": true,
+    "text": "Free shipping over $50 · Use code FOIREME10",
+    "link": "collection.html?cat=skincare",
+    "bg": "#111111",
+    "fg": "#ffffff",
+    "dismissible": true
+  },
+  "homepage_hero": {
+    "enabled": true,
+    "title": "Free Brush & More",
+    "subtitle": "Upgrade your routine with our best-sellers for a flawless finish.",
+    "cta": { "label": "Shop Now", "href": "#shop" }
+  },
+  "categories": {
+    "skincare": {
+      "enabled": true,
+      "title": "Fall Skincare Favorites",
+      "tagline": "Targeted care, clean ingredients.",
+      "image": "assets/photos/serum.jpg"
+    },
+    "makeup": {
+      "enabled": true,
+      "title": "Everyday Makeup Essentials",
+      "tagline": "Effortless color, luxury finishes.",
+      "image": "assets/photos/palette.jpg"
+    },
+    "gifts": {
+      "enabled": true,
+      "title": "Gifting, Elevated",
+      "tagline": "Curated sets for every occasion.",
+      "image": "assets/photos/brush.jpg"
+    },
+    "new": {
+      "enabled": true,
+      "title": "New Arrivals",
+      "tagline": "Fresh formulas to fall in love with.",
+      "image": "assets/photos/lipstick.jpg"
+    }
+  }
+}
+

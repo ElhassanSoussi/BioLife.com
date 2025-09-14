@@ -19,7 +19,7 @@
     gifts:    { title:'Gifts', tagline:'Curated sets for every occasion.', image:'assets/photos/brush.jpg' },
     new:      { title:'New Arrivals', tagline:'Fresh formulas to fall in love with.', image:'assets/photos/lipstick.jpg' }
   };
-  const preset = presets[cat] || { title:'Shop', tagline:'Discover luxury essentials tailored to you.', image:'assets/photos/foundation.jpg' };
+  let preset = presets[cat] || { title:'Shop', tagline:'Discover luxury essentials tailored to you.', image:'assets/photos/foundation.jpg' };
   const titleEl = document.getElementById('collection-title');
   const tagEl = document.getElementById('collection-tagline');
   titleEl && (titleEl.textContent = preset.title);
@@ -28,6 +28,17 @@
   // Banner background
   const hero = document.querySelector('.collection-hero');
   if (hero) hero.style.backgroundImage = `linear-gradient(180deg, rgba(251,248,242,.9), rgba(246,239,230,.95)), url('${preset.image}')`;
+
+  // Load promos config for category-specific overrides
+  async function loadPromos(){ try{ const res = await fetch('data/promos.json', { cache: 'no-store' }); if(!res.ok) return null; return await res.json(); }catch{ return null; } }
+  loadPromos().then(cfg => {
+    if (cfg && cfg.categories && cfg.categories[cat] && cfg.categories[cat].enabled){
+      const c = cfg.categories[cat];
+      titleEl && (titleEl.textContent = c.title || titleEl.textContent);
+      tagEl && (tagEl.textContent = c.tagline || tagEl.textContent);
+      if (hero && c.image){ hero.style.backgroundImage = `linear-gradient(180deg, rgba(251,248,242,.9), rgba(246,239,230,.95)), url('${c.image}')`; }
+    }
+  });
 
   // Filter elements
   const grid = document.getElementById('collection-grid');
@@ -119,4 +130,3 @@
   // Initial
   applyFilters();
 })();
-
