@@ -115,7 +115,7 @@ body {
   border-radius: 10px;
   white-space: nowrap;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   font-size: 0.875rem;
   font-weight: 600;
   position: relative;
@@ -204,7 +204,7 @@ body {
   display: grid;
   align-items: center;
   color: var(--ink);
-  background: #ffffff; /* desktop: pure white hero */
+  background: linear-gradient(180deg, #fbf8f2 0%, #f6efe6 100%);
 }
 
 .hero__container{
@@ -240,6 +240,7 @@ body {
   color: var(--muted);
   font-size: clamp(1rem, 1.4vw, 1.125rem);
   max-width: 48ch;
+  line-height: 1.5;
 }
 
 .btn{
@@ -421,7 +422,7 @@ body {
 
 .card__body{ padding: 14px 14px 16px; }
 .card__title{ margin: 0 0 6px; font-size: 1.0625rem; font-family: var(--font-sans); letter-spacing: 0; }
-.card__desc{ margin: 0 0 8px; color: var(--muted); font-size: 0.95rem; }
+.card__desc{ margin: 0 0 10px; color: var(--muted); font-size: 0.95rem; line-height: 1.5; }
 .card__meta{ color: var(--muted); font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
 .price{ color: var(--text); font-weight: 700; }
 
