@@ -259,39 +259,4 @@
     const el = document.getElementById('quickview');
     if (el) el.classList.remove('is-open');
   }
-
-  // Footer accordions: open on desktop, collapse on mobile
-  function setFooterAccState(){
-    const wide = window.innerWidth >= 900;
-    document.querySelectorAll('.footer-section').forEach((d) => {
-      if (wide) d.setAttribute('open',''); else d.removeAttribute('open');
-    });
-  }
-  setFooterAccState();
-  window.addEventListener('resize', setFooterAccState);
-
-  // Newsletter validation + success message
-  const nForm = document.getElementById('newsletter-form');
-  if (nForm){
-    const nInput = nForm.querySelector('.footer-input');
-    const nSuccess = nForm.querySelector('.footer-success');
-    nForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      if (!nInput) return;
-      const email = (nInput.value || '').trim();
-      const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-      if (!valid){
-        nInput.classList.add('is-invalid');
-        if (nSuccess){ nSuccess.hidden = false; nSuccess.textContent = 'Please enter a valid email.'; nSuccess.style.color = '#cc3b3b'; }
-        return;
-      }
-      nInput.classList.remove('is-invalid');
-      if (nSuccess){ nSuccess.hidden = false; nSuccess.textContent = "Thanks! You’re subscribed."; nSuccess.style.color = '#137333'; }
-      nForm.reset();
-    });
-    nInput && nInput.addEventListener('input', () => {
-      nInput.classList.remove('is-invalid');
-      if (nSuccess) nSuccess.hidden = true;
-    });
-  }
 })();
