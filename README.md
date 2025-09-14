@@ -6,6 +6,7 @@
 - Custom domain: https://www.foireme.com/
 
 [![Deploy to GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-deployed-brightgreen)](https://elhassansoussi.github.io/foireme/)
+[![Pages Deploy Status](https://github.com/ElhassanSoussi/foireme/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/ElhassanSoussi/foireme/actions/workflows/deploy-pages.yml)
 
 **Manual deploy**
 
@@ -16,4 +17,3 @@
 
 - Python: `python3 -m http.server 8000` → http://localhost:8000
 - Node: `npx serve` → follow the printed URL
-
