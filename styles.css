@@ -94,6 +94,10 @@ body {
   margin-top: 4px;
 }
 
+/* Skip link */
+.skip-link{ position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+.skip-link:focus{ position: fixed; left: 12px; top: 12px; width: auto; height: auto; padding: 10px 14px; background: #111; color: #fff; border-radius: 999px; z-index: 300; }
+
 .primary-nav{ min-width: 0; }
 .nav-list{
   display: flex;

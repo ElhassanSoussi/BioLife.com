@@ -357,7 +357,9 @@
     title.addEventListener('click', () => {
       if (window.innerWidth < 768){
         const parent = title.closest('.footer-acc');
-        parent && parent.classList.toggle('is-open');
+        if (!parent) return;
+        const isOpen = parent.classList.toggle('is-open');
+        title.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
       }
     });
   });

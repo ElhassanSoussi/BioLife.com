@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Foireme — Free Brush & More</title>
     <meta name="description" content="Free Brush & More — modern, clean beauty essentials." />
+    <meta property="og:title" content="Foireme — Free Brush & More" />
+    <meta property="og:description" content="Modern, clean beauty essentials with premium formulas." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://elhassansoussi.github.io/foireme/" />
+    <meta property="og:image" content="assets/photos/foundation.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Foireme — Free Brush & More" />
+    <meta name="twitter:description" content="Modern, clean beauty essentials with premium formulas." />
+    <meta name="twitter:image" content="assets/photos/foundation.jpg" />
+    <link rel="canonical" href="https://elhassansoussi.github.io/foireme/" />
     <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
     <link rel="preconnect" href="https://source.unsplash.com" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,6 +23,7 @@
     <link rel="stylesheet" href="styles.css?v=11" />
   </head>
   <body>
+    <a href="#main" class="skip-link">Skip to content</a>
     <header class="site-header" role="banner">
       <div class="container header__inner">
         <button class="menu-toggle" aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false">
@@ -120,15 +131,15 @@
 
         <div class="footer-grid">
           <section class="footer-col footer-acc is-open" aria-labelledby="about-title">
-            <h4 id="about-title" class="footer-title">About Foireme</h4>
-            <div class="footer-acc__content">
+            <h4 id="about-title" class="footer-title" role="button" aria-expanded="true" aria-controls="footer-about-content">About Foireme</h4>
+            <div id="footer-about-content" class="footer-acc__content" role="region" aria-labelledby="about-title">
               <p class="footer-text">Modern formulas, clean ingredients, and effortless results—crafted to let your natural beauty shine.</p>
             </div>
           </section>
 
           <nav class="footer-col footer-acc is-open" aria-labelledby="care-title">
-            <h4 id="care-title" class="footer-title">Customer Care</h4>
-            <div class="footer-acc__content">
+            <h4 id="care-title" class="footer-title" role="button" aria-expanded="true" aria-controls="footer-care-content">Customer Care</h4>
+            <div id="footer-care-content" class="footer-acc__content" role="region" aria-labelledby="care-title">
               <ul class="footer-links">
                 <li><a href="#shipping">Shipping &amp; Returns</a></li>
                 <li><a href="#contact">Contact</a></li>
@@ -138,8 +149,8 @@
           </nav>
 
           <nav class="footer-col footer-acc is-open" aria-labelledby="shop-title">
-            <h4 id="shop-title" class="footer-title">Shop</h4>
-            <div class="footer-acc__content">
+            <h4 id="shop-title" class="footer-title" role="button" aria-expanded="true" aria-controls="footer-shop-content">Shop</h4>
+            <div id="footer-shop-content" class="footer-acc__content" role="region" aria-labelledby="shop-title">
               <ul class="footer-links">
                 <li><a href="#skincare">Skincare</a></li>
                 <li><a href="#makeup">Makeup</a></li>
