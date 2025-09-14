@@ -471,9 +471,9 @@ body {
     gap: 28px;
     padding: 48px 24px 64px;
   }
-  .hero__left{ text-align: center; }
+  .hero__left{ text-align: center; order: 1; }
   .hero__subtitle{ margin-left: auto; margin-right: auto; }
-  .hero__right{ order: -1; }
+  .hero__right{ order: 2; }
   .product-stack{ width: min(74vw, 460px); }
 }
 
