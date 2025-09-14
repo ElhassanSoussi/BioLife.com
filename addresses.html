@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Addresses & Payment — Foireme</title>
+    <link rel="stylesheet" href="styles.css?v=11" />
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+    <header class="site-header" role="banner">
+      <div class="container header__inner">
+        <a href="index.html#main" class="brand" aria-label="Foireme home">F<span class="brand-o">o</span>ireme</a>
+        <div class="header-actions">
+          <a href="account.html" class="login">Account</a>
+        </div>
+      </div>
+    </header>
+    <main id="main" class="container" style="padding:32px 24px 64px; display:grid; gap:16px;">
+      <section class="form" style="padding:12px;">
+        <h1 style="margin:0 0 12px; font-size: clamp(1.5rem, 3vw, 2rem); font-weight:800;">Saved Addresses</h1>
+        <div id="addr-list" class="summary-items"></div>
+        <h2 style="margin:12px 0 8px; font-size:1rem;">Add New Address</h2>
+        <div class="form-grid">
+          <input id="a-name" class="input" placeholder="Full name" />
+          <input id="a-phone" class="input" placeholder="Phone" />
+          <input id="a-line1" class="input form-col-full" placeholder="Address" />
+          <input id="a-city" class="input" placeholder="City" />
+          <input id="a-state" class="input" placeholder="State" />
+          <input id="a-zip" class="input" placeholder="Postal code" />
+          <input id="a-country" class="input" placeholder="Country" />
+        </div>
+        <div class="form-actions"><button id="save-addr" class="btn btn--primary" type="button">Save Address</button></div>
+      </section>
+
+      <section class="form" style="padding:12px;">
+        <h1 style="margin:0 0 12px; font-size: clamp(1.5rem, 3vw, 2rem); font-weight:800;">Saved Payment Methods</h1>
+        <div id="pay-list" class="summary-items"></div>
+        <h2 style="margin:12px 0 8px; font-size:1rem;">Add Payment Method</h2>
+        <div class="form-grid">
+          <input id="p-name" class="input form-col-full" placeholder="Name on card" />
+          <input id="p-card" class="input form-col-full" placeholder="Card number" />
+          <input id="p-exp" class="input" placeholder="Expiry MM/YY" />
+          <input id="p-cvc" class="input" placeholder="CVC" />
+        </div>
+        <div class="form-actions"><button id="save-pay" class="btn btn--primary" type="button">Save Payment</button></div>
+      </section>
+    </main>
+    <script defer src="addresses.js?v=1"></script>
+  </body>
+</html>
+

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Account — Foireme</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=11" />
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+    <header class="site-header" role="banner">
+      <div class="container header__inner">
+        <a href="index.html#main" class="brand" aria-label="Foireme home">F<span class="brand-o">o</span>ireme</a>
+        <nav class="primary-nav" aria-label="Primary">
+          <ul class="nav-list">
+            <li><a href="collection.html?cat=skincare">Skincare</a></li>
+            <li><a href="collection.html?cat=makeup">Makeup</a></li>
+            <li><a href="collection.html?cat=gifts">Gifts</a></li>
+          </ul>
+        </nav>
+        <div class="header-actions">
+          <a href="cart.html" class="cart" aria-label="Cart">Cart</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main" class="container" style="padding: 36px 24px 64px;">
+      <section class="form" style="max-width:640px; margin:0 auto;">
+        <h1 style="margin:0 0 12px; font-size: clamp(1.5rem, 3vw, 2rem); font-weight:800;">Account</h1>
+        <p id="auth-msg" style="color: var(--muted);">Sign in or create an account.</p>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+          <form id="signin" class="form" style="padding:12px;">
+            <h2 style="margin:0 0 8px; font-size:1rem;">Sign In</h2>
+            <label class="label" for="si-email">Email</label>
+            <input id="si-email" class="input" type="email" required />
+            <label class="label" for="si-pass">Password</label>
+            <input id="si-pass" class="input" type="password" required />
+            <div class="form-actions"><button class="btn btn--primary" type="submit">Sign In</button></div>
+          </form>
+
+          <form id="signup" class="form" style="padding:12px;">
+            <h2 style="margin:0 0 8px; font-size:1rem;">Sign Up</h2>
+            <label class="label" for="su-name">Full name</label>
+            <input id="su-name" class="input" required />
+            <label class="label" for="su-email">Email</label>
+            <input id="su-email" class="input" type="email" required />
+            <label class="label" for="su-pass">Password</label>
+            <input id="su-pass" class="input" type="password" required />
+            <div class="form-actions"><button class="btn btn--primary" type="submit">Create Account</button></div>
+          </form>
+        </div>
+
+        <div id="account-links" hidden style="margin-top:16px; display:grid; gap:8px;">
+          <a class="btn" href="orders.html" style="background:#fff;border:1px solid var(--divider);color:var(--ink)">My Orders</a>
+          <a class="btn" href="wishlist.html" style="background:#fff;border:1px solid var(--divider);color:var(--ink)">Wishlist</a>
+          <a class="btn" href="addresses.html" style="background:#fff;border:1px solid var(--divider);color:var(--ink)">Addresses & Payment Methods</a>
+          <button id="signout" class="btn" type="button">Sign Out</button>
+        </div>
+      </section>
+    </main>
+
+    <script defer src="account.js?v=1"></script>
+  </body>
+  
+</html>
+

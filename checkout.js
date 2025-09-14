@@ -80,11 +80,22 @@
 
   // Place order (demo)
   $('#place-order').addEventListener('click', ()=>{
-    localStorage.removeItem(ITEMS_KEY);
+    const subtotal = items.reduce((s,i)=> s + (i.price||0) * i.qty, 0);
     const countKey = 'foireme_cart_count';
+    // compute totals similar to summary
+    let discount = 0; let shipping = (promoApplied && PROMOS[promoApplied]?.type==='ship') ? 0 : 5.00;
+    if (promoApplied && PROMOS[promoApplied]?.type==='percent') discount = subtotal * (PROMOS[promoApplied].value/100);
+    const total = Math.max(0, subtotal - discount) + shipping;
+    const order = { id: Date.now(), date: new Date().toISOString(), items, subtotal, discount, shipping, total, email: $('#ship-email').value };
+    try{
+      const ORDERS_KEY = 'foireme_orders';
+      const arr = JSON.parse(localStorage.getItem(ORDERS_KEY)||'[]')||[];
+      arr.push(order);
+      localStorage.setItem(ORDERS_KEY, JSON.stringify(arr));
+    }catch{}
+    localStorage.removeItem(ITEMS_KEY);
     localStorage.setItem(countKey, '0');
     $('#order-success').hidden = false;
-    setTimeout(()=>{ window.location.assign('index.html'); }, 1600);
+    setTimeout(()=>{ window.location.assign('orders.html'); }, 1600);
   });
 })();
-

@@ -24,6 +24,17 @@
   if (price) price.textContent = `$${prod.price}`;
   if (reviews) { reviews.textContent = `(${prod.reviews})`; }
   if (addBtn) addBtn.setAttribute('data-id', prod.id);
+  // Wishlist
+  const wlBtn = document.getElementById('prod-wish');
+  wlBtn && wlBtn.addEventListener('click', ()=>{
+    try{
+      const KEY='foireme_wishlist';
+      const arr = JSON.parse(localStorage.getItem(KEY)||'[]')||[];
+      if (!arr.find(x=>x.id===prod.id)) arr.push({ id: prod.id, name: prod.name, price: prod.price, image: prod.image });
+      localStorage.setItem(KEY, JSON.stringify(arr));
+      wlBtn.textContent = 'Saved to Wishlist';
+    }catch{}
+  });
 
   // Zoom interaction (move origin)
   const wrap = document.querySelector('.zoom-wrap');
@@ -80,4 +91,3 @@
     next && next.addEventListener('click', scrollBy);
   }
 })();
-
