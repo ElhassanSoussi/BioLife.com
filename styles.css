@@ -163,17 +163,11 @@ body {
 /* Hero */
 .hero{
   position: relative;
-  min-height: clamp(560px, 85vh, 900px);
+  min-height: clamp(520px, 80vh, 840px);
   display: grid;
   align-items: center;
-  color: #ffffff;
-  /* Background image with subtle left-to-right gradient for text readability */
-  background-image:
-    linear-gradient(90deg, rgba(12,12,15,0.85) 0%, rgba(12,12,15,0.65) 35%, rgba(12,12,15,0.35) 65%, rgba(12,12,15,0.2) 100%),
-    url('https://source.unsplash.com/1600x900/?cosmetics,makeup,beauty');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  color: var(--ink);
+  background: linear-gradient(180deg, #fbf8f2, #f5efe6);
 }
 
 .hero__container{
@@ -190,7 +184,7 @@ body {
 .eyebrow{
   margin: 0 0 10px;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.85);
+  color: var(--muted);
   letter-spacing: 0.12em;
   font-size: 0.85rem;
 }
@@ -206,7 +200,7 @@ body {
 
 .hero__subtitle{
   margin: 0 0 28px;
-  color: rgba(255,255,255,0.85);
+  color: var(--muted);
   font-size: clamp(1rem, 1.4vw, 1.125rem);
   max-width: 48ch;
 }
@@ -254,13 +248,16 @@ body {
 
 .product{
   position: absolute;
-  object-fit: cover;
+  object-fit: contain;
   width: auto;
   height: auto;
   border-radius: var(--radius);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.35);
-  background: #1a1a1f;
+  box-shadow: 0 16px 30px rgba(16,24,40,0.18);
+  background: #ffffff;
+  border: 1px solid var(--divider);
+  transition: transform .2s ease, box-shadow .2s ease;
 }
+.product:hover{ transform: translateY(-4px) rotate(-1deg); box-shadow: 0 24px 40px rgba(16,24,40,0.22); }
 
 /* Individual placements to create a dynamic collage */
 .product--foundation{
@@ -287,7 +284,7 @@ body {
   content: "";
   position: absolute;
   inset: 18% 14% 18% 14%;
-  background: radial-gradient(60% 60% at 50% 50%, rgba(233,177,125,0.22), rgba(233,177,125,0.08) 50%, transparent 70%);
+  background: radial-gradient(60% 60% at 50% 50%, rgba(184,155,91,0.16), rgba(184,155,91,0.06) 50%, transparent 70%);
   filter: blur(12px);
   z-index: 0;
 }
