@@ -4,8 +4,8 @@ html, body { height: 100%; }
 html{ background: #ffffff; }
 :root{
   /* Typography */
-  --font-serif: 'Playfair Display', 'Times New Roman', serif;
-  --font-sans: "Helvetica Neue", Helvetica, Arial, ui-sans-serif, system-ui;
+  --font-serif: 'Inter', Arial, ui-sans-serif, system-ui;
+  --font-sans: 'Inter', "Helvetica Neue", Helvetica, Arial, ui-sans-serif, system-ui;
 
   /* Dimensions */
   --container-max: 1240px;
@@ -63,9 +63,9 @@ body {
 .brand{
   color: var(--ink);
   text-decoration: none;
-  font-family: var(--font-serif);
-  font-weight: 700;
-  letter-spacing: 0.01em;
+  font-family: var(--font-sans);
+  font-weight: 800;
+  letter-spacing: 0.02em;
   font-size: 1.125rem;
 }
 
@@ -192,11 +192,11 @@ body {
 
 .hero__title{
   margin: 0 0 12px;
-  font-weight: 700;
-  font-family: var(--font-serif);
+  font-weight: 800;
+  font-family: var(--font-sans);
   line-height: 1.02;
-  letter-spacing: -0.02em;
-  font-size: clamp(2.25rem, 4.5vw, 4rem);
+  letter-spacing: -0.01em;
+  font-size: clamp(2.5rem, 5vw, 4.25rem);
 }
 
 .hero__subtitle{
@@ -212,7 +212,7 @@ body {
   justify-content: center;
   gap: 10px;
   padding: 14px 24px;
-  font-weight: 600;
+  font-weight: 700;
   border-radius: 999px;
   text-decoration: none;
   transition: transform .12s ease, background-color .2s ease, box-shadow .2s ease;
@@ -303,9 +303,9 @@ body {
 .section-header{ margin-bottom: clamp(18px, 3.5vw, 28px); }
 .section-title{
   margin: 0 0 8px;
-  font-size: clamp(1.5rem, 2.8vw, 2.25rem);
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
   letter-spacing: -0.01em;
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
 }
 .section-title::after{
   content: "";
@@ -390,7 +390,7 @@ body {
 .badge--limited{ background: #f8b4b4; }
 
 .card__body{ padding: 14px 14px 16px; }
-.card__title{ margin: 0 0 8px; font-size: 1rem; }
+.card__title{ margin: 0 0 8px; font-size: 1.0625rem; font-family: var(--font-sans); letter-spacing: 0; }
 .card__meta{ color: var(--muted); font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
 .price{ color: var(--text); font-weight: 700; }
 
@@ -490,7 +490,7 @@ body {
   grid-template-columns: repeat(3, minmax(0,1fr));
   gap: clamp(16px, 3vw, 36px);
 }
-.footer-title{ margin: 0 0 10px; font-size: 1rem; color: var(--ink); font-family: var(--font-serif); }
+.footer-title{ margin: 0 0 10px; font-size: 1.125rem; color: var(--ink); font-family: var(--font-sans); letter-spacing: 0.01em; }
 .footer-text{ margin: 0; color: var(--muted); max-width: 52ch; }
 .footer-links{ list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
 .footer-links a{ color: var(--muted); text-decoration: none; }
