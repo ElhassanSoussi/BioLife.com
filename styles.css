@@ -1,0 +1,185 @@
+/* Base */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  color: #0f0f14;
+  background: #0c0c0f;
+}
+
+:root{
+  --text: #ffffff;
+  --muted: rgba(255,255,255,0.75);
+  --accent: #e9b17d; /* warm cosmetic tone */
+  --btn-bg: #ffffff;
+  --btn-text: #0f0f14;
+  --btn-bg-hover: #f3f3f4;
+}
+
+.container{
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Hero */
+.hero{
+  position: relative;
+  min-height: clamp(560px, 85vh, 900px);
+  display: grid;
+  align-items: center;
+  color: var(--text);
+  /* Background image with subtle left-to-right gradient for text readability */
+  background-image:
+    linear-gradient(90deg, rgba(12,12,15,0.85) 0%, rgba(12,12,15,0.65) 35%, rgba(12,12,15,0.35) 65%, rgba(12,12,15,0.2) 100%),
+    url('https://source.unsplash.com/1600x900/?cosmetics,makeup,beauty');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.hero__container{
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: clamp(24px, 5vw, 64px);
+  align-items: center;
+}
+
+.hero__left{
+  padding: clamp(12px, 2vw, 24px) 0;
+}
+
+.eyebrow{
+  margin: 0 0 10px;
+  text-transform: uppercase;
+  color: var(--muted);
+  letter-spacing: 0.12em;
+  font-size: 0.85rem;
+}
+
+.hero__title{
+  margin: 0 0 12px;
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  font-size: clamp(2.25rem, 4.5vw, 4rem);
+}
+
+.hero__subtitle{
+  margin: 0 0 28px;
+  color: var(--muted);
+  font-size: clamp(1rem, 1.4vw, 1.125rem);
+  max-width: 48ch;
+}
+
+.btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 22px;
+  font-weight: 600;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: transform .12s ease, background-color .2s ease, box-shadow .2s ease;
+  will-change: transform;
+}
+
+.btn--primary{
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.22), 0 2px 6px rgba(0,0,0,0.15);
+}
+.btn--primary:hover{
+  background: var(--btn-bg-hover);
+  transform: translateY(-1px);
+}
+.btn--primary:active{
+  transform: translateY(0);
+}
+
+.hero__right{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-stack{
+  position: relative;
+  width: clamp(280px, 42vw, 520px);
+  aspect-ratio: 1 / 1;
+}
+
+.product{
+  position: absolute;
+  object-fit: cover;
+  width: auto;
+  height: auto;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+  background: #1a1a1f;
+}
+
+/* Individual placements to create a dynamic collage */
+.product--foundation{
+  left: 6%;
+  bottom: 8%;
+  width: 54%;
+  transform: rotate(-3deg);
+}
+.product--brush{
+  right: 2%;
+  top: 12%;
+  width: 46%;
+  transform: rotate(6deg);
+}
+.product--serum{
+  right: 18%;
+  bottom: 0%;
+  width: 40%;
+  transform: rotate(-8deg);
+}
+
+/* Subtle accent glow behind products for depth */
+.product-stack::before{
+  content: "";
+  position: absolute;
+  inset: 18% 14% 18% 14%;
+  background: radial-gradient(60% 60% at 50% 50%, rgba(233,177,125,0.22), rgba(233,177,125,0.08) 50%, transparent 70%);
+  filter: blur(12px);
+  z-index: 0;
+}
+.product{ z-index: 1; }
+
+/* Anchor target spacing (optional) */
+.shop-anchor{ height: 1px; }
+
+/* Responsive */
+@media (max-width: 1024px){
+  .hero__container{ grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 900px){
+  .hero{
+    background-image:
+      linear-gradient(180deg, rgba(12,12,15,0.88) 0%, rgba(12,12,15,0.72) 40%, rgba(12,12,15,0.28) 100%),
+      url('https://source.unsplash.com/1200x1600/?cosmetics,makeup,beauty');
+    background-position: 40% 50%;
+  }
+  .hero__container{
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding: 48px 24px 64px;
+  }
+  .hero__left{ text-align: center; }
+  .hero__subtitle{ margin-left: auto; margin-right: auto; }
+  .hero__right{ order: -1; }
+  .product-stack{ width: min(74vw, 460px); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .btn{ transition: none; }
+}
+
