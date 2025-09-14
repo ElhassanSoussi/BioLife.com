@@ -68,9 +68,9 @@ body {
   color: var(--accent);
   text-decoration: none;
   font-family: 'Playfair Display', var(--font-sans);
-  font-weight: 900;
+  font-weight: 800; /* slightly less thick */
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.06em; /* tighter tracking */
   font-size: clamp(2rem, 4.5vw, 3rem);
   line-height: 1;
   display: inline-block;
