@@ -54,6 +54,9 @@ body {
   box-shadow: 0 2px 8px rgba(16,24,40,0.06);
 }
 .menu-toggle{ display: none; }
+@media (min-width: 901px){
+  .menu-toggle{ display: none !important; visibility: hidden; }
+}
 .header__inner{
   display: grid;
   grid-template-columns: auto 1fr auto;
