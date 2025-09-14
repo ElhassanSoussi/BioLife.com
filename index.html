@@ -148,6 +148,27 @@
       </div>
     </footer>
   </body>
-  <script defer src="app.js?v=5"></script>
+  <!-- Mini Cart Drawer -->
+  <nav id="mini-cart" class="mini-cart" aria-label="Mini cart" hidden>
+    <div class="mini-cart__backdrop" data-dismiss></div>
+    <div class="mini-cart__panel" role="dialog" aria-modal="true" aria-labelledby="mini-cart-title">
+      <header class="mini-cart__header">
+        <h3 id="mini-cart-title">Your Cart</h3>
+        <button class="mini-cart__close" data-dismiss aria-label="Close cart">×</button>
+      </header>
+      <div class="mini-cart__content">
+        <ul class="mini-cart__items"></ul>
+      </div>
+      <footer class="mini-cart__footer">
+        <div class="mini-cart__subtotal"><span>Subtotal</span><strong class="mini-cart__subtotal-value">$0</strong></div>
+        <button class="btn btn--primary mini-cart__checkout" type="button" disabled>Checkout</button>
+      </footer>
+    </div>
+  </nav>
+
+  <!-- Toast -->
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <script defer src="app.js?v=11"></script>
   
 </html>

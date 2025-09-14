@@ -196,24 +196,115 @@
     menu.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
   }
 
-  // Cart counter wiring
-  const CART_KEY = 'foireme_cart_count';
-  const getCart = () => parseInt(localStorage.getItem(CART_KEY) || '0', 10);
-  const setCart = (n) => localStorage.setItem(CART_KEY, String(n));
-  const badge = document.querySelector('.cart__count');
-  if (badge) badge.textContent = String(getCart());
+  // Cart state
+  const CART_KEY = 'foireme_cart_count'; // legacy (count only)
+  const CART_ITEMS_KEY = 'foireme_cart_items';
+  let cartItems = [];
+  try { cartItems = JSON.parse(localStorage.getItem(CART_ITEMS_KEY) || '[]') || []; } catch {}
 
+  const saveCart = () => {
+    localStorage.setItem(CART_ITEMS_KEY, JSON.stringify(cartItems));
+    // keep legacy count updated
+    const count = cartItems.reduce((s,i)=>s+i.qty,0);
+    localStorage.setItem(CART_KEY, String(count));
+  };
+  const badge = document.querySelector('.cart__count');
+  const updateBadge = () => { if (badge) badge.textContent = String(cartItems.reduce((s,i)=>s+i.qty,0)); };
+  updateBadge();
+
+  // Helpers
+  const findProduct = (pid) => allProducts.find(p => p.id === pid || `p${allProducts.indexOf(p)+1}` === pid);
+  const addToCart = (pid, qty=1) => {
+    const p = findProduct(pid);
+    if (!p) return null;
+    const idx = cartItems.findIndex(i => i.id === p.id);
+    if (idx >= 0) cartItems[idx].qty += qty; else cartItems.push({ id: p.id, name: p.name, price: p.price, image: p.image, qty });
+    saveCart(); updateBadge(); renderMiniCart();
+    return { id: p.id, qty };
+  };
+  const removeFromCart = (pid, qty=1) => {
+    const i = cartItems.findIndex(x=>x.id===pid);
+    if (i<0) return;
+    cartItems[i].qty -= qty;
+    if (cartItems[i].qty <= 0) cartItems.splice(i,1);
+    saveCart(); updateBadge(); renderMiniCart();
+  };
+
+  // Mini cart UI
+  const mini = document.getElementById('mini-cart');
+  const miniItems = () => mini && mini.querySelector('.mini-cart__items');
+  const subtotalEl = () => mini && mini.querySelector('.mini-cart__subtotal-value');
+  const checkoutBtn = () => mini && mini.querySelector('.mini-cart__checkout');
+  const openMini = () => { if (!mini) return; mini.classList.add('is-open'); mini.removeAttribute('hidden'); };
+  const closeMini = () => { if (!mini) return; mini.classList.remove('is-open'); mini.setAttribute('hidden',''); };
+  const renderMiniCart = () => {
+    const list = miniItems(); if (!list) return;
+    if (!cartItems.length){ list.innerHTML = '<li class="mini-cart__empty">Your cart is empty.</li>'; if (checkoutBtn()) checkoutBtn().disabled = true; if (subtotalEl()) subtotalEl().textContent = '$0'; return; }
+    list.innerHTML = cartItems.map(i => {
+      const p = findProduct(i.id) || i;
+      const line = (i.qty * (p.price || 0)).toFixed(2);
+      return `<li class="mini-cart__item" data-id="${i.id}">
+        <img src="${p.image}" alt="${p.name}" class="mini-cart__img"/>
+        <div>
+          <p class="mini-cart__name">${p.name}</p>
+          <p class="mini-cart__price">$${p.price} × ${i.qty} = $${line}</p>
+          <div class="mini-cart__qty">
+            <button class="mini-cart__btn js-qty-dec" aria-label="Decrease">−</button>
+            <span>${i.qty}</span>
+            <button class="mini-cart__btn js-qty-inc" aria-label="Increase">+</button>
+          </div>
+        </div>
+        <button class="mini-cart__remove js-remove" aria-label="Remove">Remove</button>
+      </li>`;
+    }).join('');
+    const subtotal = cartItems.reduce((s,i)=>{
+      const p = findProduct(i.id) || {}; return s + (p.price||0)*i.qty;
+    },0).toFixed(2);
+    if (subtotalEl()) subtotalEl().textContent = `$${subtotal}`;
+    if (checkoutBtn()) checkoutBtn().disabled = false;
+  };
+  renderMiniCart();
+
+  // Open cart from header
+  const cartBtn = document.querySelector('.cart');
+  cartBtn && cartBtn.addEventListener('click', (e)=>{ e.preventDefault(); openMini(); });
+  mini && mini.addEventListener('click', (e)=>{
+    if (e.target.matches('[data-dismiss]') || e.target.closest('[data-dismiss]')) { closeMini(); }
+    const item = e.target.closest('.mini-cart__item');
+    if (!item) return;
+    const id = item.getAttribute('data-id');
+    if (e.target.closest('.js-qty-inc')) { addToCart(id,1); }
+    if (e.target.closest('.js-qty-dec')) { removeFromCart(id,1); }
+    if (e.target.closest('.js-remove')) { const it = cartItems.find(x=>x.id===id); if (it) removeFromCart(id, it.qty); }
+  });
+
+  // Toast
+  const toast = document.getElementById('toast');
+  let toastTimer = null; let lastAdd = null;
+  const showToast = (msg, undoPayload) => {
+    if (!toast) return;
+    toast.innerHTML = `${msg} <button class="toast__undo" type="button">Undo</button>`;
+    toast.hidden = false; toast.classList.add('is-show');
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(()=>{ toast.classList.remove('is-show'); toast.hidden = true; }, 3200);
+    lastAdd = undoPayload || null;
+  };
+  toast && toast.addEventListener('click', (e)=>{
+    if (e.target.closest('.toast__undo') && lastAdd){ removeFromCart(lastAdd.id, lastAdd.qty); toast.classList.remove('is-show'); toast.hidden = true; }
+  });
+
+  // Global click handler additions
   document.addEventListener('click', (e) => {
     const addBtn = e.target.closest('.js-add');
     const viewBtn = e.target.closest('.js-view');
     if (addBtn) {
-      const next = getCart() + 1;
-      setCart(next);
-      if (badge) badge.textContent = String(next);
+      const id = addBtn.getAttribute('data-id');
+      const payload = addToCart(id, 1);
+      if (payload) showToast('Added to cart', payload);
     }
     if (viewBtn) {
       const id = viewBtn.getAttribute('data-id');
-      const p = products.find(x => (x.id || '') === id || (('p'+(products.indexOf(x)+1)) === id));
+      const p = findProduct(id);
       if (p) openModal(p);
     }
   });
