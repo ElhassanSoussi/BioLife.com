@@ -11,7 +11,7 @@ html, body { height: 100%; }
   --radius: 16px;
 
   /* Palette */
-  --bg: #faf7f2;           /* light, warm background */
+  --bg: #ffffff;           /* bright white page background */
   --surface: #ffffff;       /* cards, header */
   --ink: #111111;           /* primary text */
   --muted: #5f6368;         /* secondary text */
@@ -167,7 +167,7 @@ body {
   display: grid;
   align-items: center;
   color: var(--ink);
-  background: linear-gradient(180deg, #fbf8f2, #f5efe6);
+  background: #ffffff; /* desktop: pure white hero */
 }
 
 .hero__container{
