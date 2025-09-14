@@ -420,6 +420,7 @@ body {
   background: linear-gradient(0deg, rgba(11,31,58,0.55) 0%, rgba(11,31,58,0.0) 55%);
   opacity: 0;
   transition: opacity .2s ease;
+  pointer-events: none; /* ensure overlay doesn't block clicks */
 }
 .card:hover .card__media::after,
 .card:focus-within .card__media::after{ opacity: 1; }
@@ -432,6 +433,7 @@ body {
   transform: translate(-50%, 8px);
   opacity: 0;
   transition: opacity .2s ease, transform .2s ease;
+  z-index: 2; /* above image overlay */
 }
 .card:hover .quickadd,
 .card:focus-within .quickadd{ opacity: 1; transform: translate(-50%, 0); }
@@ -674,6 +676,7 @@ body {
 .collection__content{ display: grid; gap: 12px; }
 .sort-bar{ display: inline-grid; grid-auto-flow: column; align-items: center; gap: 10px; justify-content: end; }
 .collection-grid{ display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(14px, 2vw, 24px); }
+@media (min-width: 1201px){ .collection-grid{ grid-template-columns: repeat(5, minmax(0, 1fr)); } }
 .collection-actions{ display: grid; justify-content: center; padding: 8px 0 0; }
 
 @media (max-width: 1200px){ .collection-grid{ grid-template-columns: repeat(4, minmax(0, 1fr)); } }
