@@ -172,6 +172,30 @@
     searchEl.addEventListener('input', doFilter);
   }
 
+  // Mobile menu toggle
+  const menu = document.getElementById('mobile-menu');
+  const menuBtn = document.querySelector('.menu-toggle');
+  if (menu && menuBtn){
+    const open = () => {
+      menu.classList.add('is-open');
+      menu.removeAttribute('hidden');
+      menuBtn.setAttribute('aria-expanded','true');
+    };
+    const close = () => {
+      menu.classList.remove('is-open');
+      menu.setAttribute('hidden','');
+      menuBtn.setAttribute('aria-expanded','false');
+    };
+    menuBtn.addEventListener('click', () => {
+      if (menu.classList.contains('is-open')) close(); else open();
+    });
+    menu.addEventListener('click', (e) => {
+      if (e.target.matches('[data-dismiss]') || e.target.closest('[data-dismiss]')) close();
+    });
+    // Close when a link is clicked
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+  }
+
   // Cart counter wiring
   const CART_KEY = 'foireme_cart_count';
   const getCart = () => parseInt(localStorage.getItem(CART_KEY) || '0', 10);

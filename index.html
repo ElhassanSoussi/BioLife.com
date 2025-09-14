@@ -15,6 +15,11 @@
   <body>
     <header class="site-header" role="banner">
       <div class="container header__inner">
+        <button class="menu-toggle" aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
         <a href="#main" class="brand" aria-label="Foireme home">Foireme</a>
 
         <nav class="primary-nav" aria-label="Primary">
@@ -50,6 +55,21 @@
         </div>
       </div>
     </header>
+    <!-- Mobile Menu -->
+    <nav id="mobile-menu" class="mobile-menu" aria-label="Mobile menu" hidden>
+      <div class="mobile-menu__backdrop" data-dismiss></div>
+      <div class="mobile-menu__panel">
+        <button class="mobile-menu__close" data-dismiss aria-label="Close menu">×</button>
+        <ul class="mobile-menu__list">
+          <li><a href="#skincare">1. SKINCARE</a></li>
+          <li><a href="#makeup">2. MAKEUP</a></li>
+          <li><a href="#gifts">3. GIFTS</a></li>
+          <li><a href="#new">4. NEW ARRIVALS</a></li>
+          <li><a href="#blog">5. BLOG</a></li>
+          <li><a href="#membership">6. MEMBERSHIP</a></li>
+        </ul>
+      </div>
+    </nav>
     <main id="main">
       <!-- Hero Section -->
       <section class="hero" aria-label="Featured offer">
@@ -129,6 +149,6 @@
       </div>
     </footer>
   </body>
-  <script defer src="app.js?v=4"></script>
+  <script defer src="app.js?v=5"></script>
   
 </html>

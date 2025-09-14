@@ -53,6 +53,7 @@ body {
   border-bottom: 1px solid var(--divider);
   box-shadow: 0 2px 8px rgba(16,24,40,0.06);
 }
+.menu-toggle{ display: none; }
 .header__inner{
   display: grid;
   grid-template-columns: auto 1fr auto;
@@ -438,17 +439,10 @@ body {
 }
 
 @media (max-width: 900px){
-  .header__inner{ grid-template-columns: 1fr auto; gap: 12px; }
+  .header__inner{ grid-template-columns: auto 1fr auto; gap: 12px; }
   .brand{ display: inline-block; }
-  .primary-nav{ order: 2; grid-column: 1 / -1; }
-  .nav-list{
-    justify-content: center;
-    gap: 18px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none; /* Firefox */
-  }
-  .nav-list::-webkit-scrollbar{ display: none; }
+  .primary-nav{ display: none; }
+  .menu-toggle{ display: inline-grid; place-items: center; width: 42px; height: 42px; border: 1px solid var(--divider); border-radius: 999px; background: var(--surface); color: var(--ink); }
   .search{ width: min(46vw, 240px); }
   .section-header{ text-align: center; }
   .section-title::after{ margin-left: auto; margin-right: auto; }
@@ -467,6 +461,16 @@ body {
   .hero__right{ order: -1; }
   .product-stack{ width: min(74vw, 460px); }
 }
+
+/* Mobile menu (drawer) */
+.mobile-menu{ position: fixed; inset: 0; z-index: 120; display: none; }
+.mobile-menu.is-open{ display: block; }
+.mobile-menu__backdrop{ position: absolute; inset: 0; background: rgba(0,0,0,0.4); }
+.mobile-menu__panel{ position: absolute; top: 0; left: 0; width: min(82vw, 360px); height: 100%; background: #fff; border-right: 1px solid var(--divider); box-shadow: var(--shadow); padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+.mobile-menu__close{ position: absolute; top: 10px; right: 10px; border: 1px solid var(--divider); background: #fff; width: 36px; height: 36px; border-radius: 999px; font-size: 20px; line-height: 1; cursor: pointer; }
+.mobile-menu__list{ margin: 40px 0 0; padding: 0; display: grid; gap: 8px; }
+.mobile-menu__list a{ display: block; padding: 12px 10px; border-radius: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink); text-decoration: none; }
+.mobile-menu__list a:hover{ background: #f7f7f7; }
 
 @media (prefers-reduced-motion: reduce){
   .btn{ transition: none; }
