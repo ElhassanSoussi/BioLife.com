@@ -528,7 +528,7 @@ body {
 
 .footer-grid{
   display: grid;
-  grid-template-columns: repeat(4, minmax(0,1fr));
+  grid-template-columns: repeat(3, minmax(0,1fr));
   gap: clamp(24px, 4vw, 48px);
 }
 .footer-title{ margin: 0 0 10px; font-size: 0.95rem; color: var(--muted); font-family: var(--font-sans); letter-spacing: 0.02em; font-weight: 700; }
@@ -550,8 +550,10 @@ body {
   .footer-grid{ grid-template-columns: 1fr; }
 }
 
-/* Footer email form */
-.footer-form{ display: grid; gap: 10px; }
+/* Footer email form (top centered) */
+.footer-newsletter{ display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; padding-bottom: clamp(18px, 3vw, 24px); border-bottom: 1px solid var(--divider); margin-bottom: clamp(18px, 3vw, 24px); }
+.footer-newsletter__title{ margin: 0; font-size: 1.05rem; color: var(--muted); letter-spacing: 0.02em; font-weight: 700; }
+.footer-form{ display: grid; gap: 10px; width: min(560px, 100%); }
 .footer-input-wrap{ display: grid; grid-template-columns: 1fr auto; gap: 8px; }
 .footer-input{ width: 100%; padding: 10px 12px; border: 1px solid var(--divider); border-radius: 999px; background: #fff; color: var(--ink); font-size: 0.95rem; }
 .footer-input::placeholder{ color: #9aa0a6; }
