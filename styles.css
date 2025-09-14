@@ -61,12 +61,21 @@ body {
   min-height: 72px;
 }
 .brand{
-  color: var(--ink);
+  color: var(--accent);
   text-decoration: none;
-  font-family: var(--font-sans);
+  font-family: 'Playfair Display', var(--font-sans);
   font-weight: 900;
-  letter-spacing: 0.02em;
-  font-size: clamp(1.375rem, 3vw, 2.25rem);
+  letter-spacing: 0.08em;
+  font-size: clamp(1.5rem, 3.2vw, 2.5rem);
+  line-height: 1;
+}
+.brand::after{
+  content: "";
+  display: block;
+  width: 44px;
+  height: 2px;
+  background: var(--accent);
+  margin-top: 4px;
 }
 
 .primary-nav{ min-width: 0; }
