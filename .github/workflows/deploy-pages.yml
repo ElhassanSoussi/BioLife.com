@@ -68,6 +68,11 @@ jobs:
             echo "publish_dir=${{ github.event.inputs.publish_dir || '.' }}" >> $GITHUB_OUTPUT
           fi
 
+      - name: Show publish dir (debug)
+        run: |
+          echo "Determined publish_dir=${{ steps.set_publish_dir.outputs.publish_dir }}"
+          ls -la "${{ steps.set_publish_dir.outputs.publish_dir }}" || echo "Directory not found"
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
