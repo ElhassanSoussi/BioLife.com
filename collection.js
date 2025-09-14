@@ -30,7 +30,11 @@
   if (hero) hero.style.backgroundImage = `linear-gradient(180deg, rgba(251,248,242,.9), rgba(246,239,230,.95)), url('${preset.image}')`;
 
   // Load promos config for category-specific overrides
-  async function loadPromos(){ try{ const res = await fetch('data/promos.json', { cache: 'no-store' }); if(!res.ok) return null; return await res.json(); }catch{ return null; } }
+  async function loadPromos(){
+    if (window.FOIREME_PROMOS) return window.FOIREME_PROMOS;
+    if (location.protocol === 'file:') return null;
+    try{ const res = await fetch('data/promos.json', { cache: 'no-store' }); if(!res.ok) return null; return await res.json(); }catch{ return null; }
+  }
   loadPromos().then(cfg => {
     if (cfg && cfg.categories && cfg.categories[cat] && cfg.categories[cat].enabled){
       const c = cfg.categories[cat];

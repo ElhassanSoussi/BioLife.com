@@ -1,9 +1,23 @@
 // Temporary hardcoded product data and renderer
 // Replace these with real images/data later.
 (function () {
-  // Load promos config
+  // Load promos config (robust for file:// and errors)
+  const defaultPromos = {
+    global: { enabled: true, text: 'Free shipping over $50 · Use code FOIREME10', link: 'collection.html?cat=skincare', bg: '#111111', fg: '#ffffff', dismissible: true },
+    homepage_hero: { enabled: true, title: 'Free Brush & More', subtitle: 'Upgrade your routine with our best-sellers for a flawless finish.', cta: { label: 'Shop Now', href: '#shop' } }
+  };
   async function loadPromos(){
-    try{ const res = await fetch('data/promos.json', { cache: 'no-store' }); if (!res.ok) return null; return await res.json(); }catch{ return null; }
+    if (window.FOIREME_PROMOS) return window.FOIREME_PROMOS;
+    if (location.protocol === 'file:') return defaultPromos;
+    try{
+      const res = await fetch('data/promos.json', { cache: 'no-store' });
+      if (!res.ok) return defaultPromos;
+      const json = await res.json();
+      return json || defaultPromos;
+    }catch(err){
+      console.warn('Promos config failed to load; using defaults', err);
+      return defaultPromos;
+    }
   }
 
   function renderGlobalPromo(cfg){
