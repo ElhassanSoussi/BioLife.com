@@ -361,7 +361,7 @@
   if (checkoutBtn()){
     checkoutBtn().addEventListener('click', (e)=>{
       e.preventDefault();
-      window.location.assign('cart.html');
+      window.location.assign('checkout.html');
     });
   }
 

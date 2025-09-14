@@ -52,15 +52,7 @@
     save(); render();
   });
 
-  btnCheckout && btnCheckout.addEventListener('click', ()=>{
-    if (!modal) return;
-    modal.hidden = false; modal.classList.add('is-open');
-  });
-  modal && modal.addEventListener('click', (e)=>{
-    if (e.target.matches('[data-dismiss]') || e.target.closest('[data-dismiss]')){
-      modal.classList.remove('is-open'); modal.hidden = true;
-    }
-  });
+  btnCheckout && btnCheckout.addEventListener('click', ()=>{ window.location.assign('checkout.html'); });
 
   render();
 })();

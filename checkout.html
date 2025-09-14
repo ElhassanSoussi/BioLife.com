@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Checkout — Foireme</title>
+    <meta name="description" content="Secure checkout with Foireme — fast, simple, and trusted." />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=11" />
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+    <header class="site-header" role="banner">
+      <div class="container header__inner">
+        <a href="index.html#main" class="brand" aria-label="Foireme home">F<span class="brand-o">o</span>ireme</a>
+        <nav class="primary-nav" aria-label="Primary">
+          <ul class="nav-list">
+            <li><a href="collection.html?cat=skincare">Skincare</a></li>
+            <li><a href="collection.html?cat=makeup">Makeup</a></li>
+            <li><a href="collection.html?cat=gifts">Gifts</a></li>
+          </ul>
+        </nav>
+        <div class="header-actions">
+          <a href="cart.html" class="cart" aria-label="Cart">
+            <svg class="cart__icon" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M6 6h15l-1.5 9H7.5L6 6z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+              <path d="M6 6l-1-3H3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              <circle cx="9" cy="20" r="1.5" fill="currentColor"/>
+              <circle cx="18" cy="20" r="1.5" fill="currentColor"/>
+            </svg>
+            <span class="cart__count" aria-live="polite">0</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main" class="checkout" aria-label="Checkout">
+      <div class="container checkout__grid">
+        <section class="checkout__main" aria-label="Checkout form">
+          <div class="stepper" aria-label="Progress">
+            <div class="step is-active"><span>1</span> Shipping</div>
+            <div class="step"><span>2</span> Payment</div>
+            <div class="step"><span>3</span> Review</div>
+          </div>
+
+          <!-- Sign in option -->
+          <div class="signin-bar">
+            <p class="signin-text">Checkout as guest or <button id="toggle-signin" class="link-btn" type="button">sign in</button></p>
+            <form id="signin-form" class="signin-form" hidden>
+              <input type="email" class="input" placeholder="Email" aria-label="Email" />
+              <input type="password" class="input" placeholder="Password" aria-label="Password" />
+              <button class="btn btn--primary btn--sm" type="button">Sign In</button>
+            </form>
+          </div>
+
+          <!-- Step 1: Shipping -->
+          <form id="step-shipping" class="form is-active" autocomplete="on">
+            <div class="form-grid">
+              <div class="form-col">
+                <label class="label">First name</label>
+                <input class="input" id="ship-first" required />
+              </div>
+              <div class="form-col">
+                <label class="label">Last name</label>
+                <input class="input" id="ship-last" required />
+              </div>
+              <div class="form-col form-col-full">
+                <label class="label">Email</label>
+                <input class="input" type="email" id="ship-email" required />
+              </div>
+              <div class="form-col form-col-full">
+                <label class="label">Address</label>
+                <input class="input" id="ship-address" required />
+              </div>
+              <div class="form-col">
+                <label class="label">City</label>
+                <input class="input" id="ship-city" required />
+              </div>
+              <div class="form-col">
+                <label class="label">State/Province</label>
+                <input class="input" id="ship-state" />
+              </div>
+              <div class="form-col">
+                <label class="label">Postal code</label>
+                <input class="input" id="ship-zip" required />
+              </div>
+              <div class="form-col">
+                <label class="label">Country</label>
+                <input class="input" id="ship-country" required />
+              </div>
+            </div>
+            <div class="form-actions">
+              <button id="to-payment" class="btn btn--primary" type="button">Continue to Payment</button>
+            </div>
+          </form>
+
+          <!-- Step 2: Payment -->
+          <form id="step-payment" class="form" hidden>
+            <div class="pay-logos" aria-hidden="true">
+              <span class="logo-badge">VISA</span>
+              <span class="logo-badge">MC</span>
+              <span class="logo-badge">AMEX</span>
+              <span class="logo-badge">PayPal</span>
+            </div>
+            <div class="form-grid">
+              <div class="form-col form-col-full">
+                <label class="label">Name on card</label>
+                <input class="input" id="pay-name" required />
+              </div>
+              <div class="form-col form-col-full">
+                <label class="label">Card number</label>
+                <input class="input" id="pay-card" inputmode="numeric" placeholder="1234 5678 9012 3456" required />
+              </div>
+              <div class="form-col">
+                <label class="label">Expiry</label>
+                <input class="input" id="pay-exp" placeholder="MM/YY" required />
+              </div>
+              <div class="form-col">
+                <label class="label">CVC</label>
+                <input class="input" id="pay-cvc" placeholder="123" required />
+              </div>
+            </div>
+            <div class="form-actions">
+              <button id="back-to-shipping" class="btn" type="button">Back</button>
+              <button id="to-review" class="btn btn--primary" type="button">Review Order</button>
+            </div>
+            <div class="trust">
+              <span class="lock">🔒</span> Secure checkout — SSL encrypted
+            </div>
+          </form>
+
+          <!-- Step 3: Review -->
+          <section id="step-review" class="form" hidden aria-label="Review order">
+            <div class="review-block" id="review-shipping"></div>
+            <div class="review-block" id="review-payment"></div>
+            <div class="form-actions">
+              <button id="back-to-payment" class="btn" type="button">Back</button>
+              <button id="place-order" class="btn btn--primary" type="button">Place Order</button>
+            </div>
+            <p id="order-success" class="success" hidden>Thank you! Your order has been placed.</p>
+          </section>
+        </section>
+
+        <!-- Summary / Promo -->
+        <aside class="checkout__summary" aria-label="Order summary">
+          <div class="summary-card">
+            <h3 class="summary-title">Order summary</h3>
+            <ul id="summary-items" class="summary-items"></ul>
+            <div class="summary-row"><span>Subtotal</span><strong id="summary-subtotal">$0</strong></div>
+            <div class="summary-row"><span>Discount</span><strong id="summary-discount">-$0</strong></div>
+            <div class="summary-row"><span>Shipping</span><strong id="summary-shipping">$5.00</strong></div>
+            <div class="summary-row summary-total"><span>Total</span><strong id="summary-total">$0</strong></div>
+            <div class="promo">
+              <label class="label" for="promo">Promo code</label>
+              <div class="promo-row">
+                <input id="promo" class="input" placeholder="Enter code" />
+                <button id="apply-promo" class="btn btn--sm" type="button">Apply</button>
+              </div>
+              <p id="promo-msg" class="promo-msg" aria-live="polite"></p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <script defer src="app.js?v=15"></script>
+    <script defer src="checkout.js?v=1"></script>
+  </body>
+  
+</html>
+
