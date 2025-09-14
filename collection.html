@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Shop — Foireme</title>
+    <meta name="description" content="Shop Foireme collections with clean, luxury essentials." />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=11" />
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+    <header class="site-header" role="banner">
+      <div class="container header__inner">
+        <button class="menu-toggle" aria-label="Open menu" aria-controls="mobile-menu" aria-expanded="false">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+        <a href="index.html#main" class="brand" aria-label="Foireme home">F<span class="brand-o">o</span>ireme</a>
+
+        <nav class="primary-nav" aria-label="Primary">
+          <ul class="nav-list">
+            <li><a href="collection.html?cat=skincare">Skincare</a></li>
+            <li><a href="collection.html?cat=makeup">Makeup</a></li>
+            <li><a href="collection.html?cat=gifts">Gifts</a></li>
+            <li><a href="collection.html?cat=new">New Arrivals</a></li>
+          </ul>
+        </nav>
+
+        <div class="header-actions">
+          <a href="#login" class="login" aria-label="Log in">
+            <svg class="login__icon" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.6"/>
+              <path d="M4 20c1.7-3.2 5-5 8-5s6.3 1.8 8 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+          </a>
+          <a href="#cart" class="cart" aria-label="Cart">
+            <svg class="cart__icon" width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M6 6h15l-1.5 9H7.5L6 6z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+              <path d="M6 6l-1-3H3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              <circle cx="9" cy="20" r="1.5" fill="currentColor"/>
+              <circle cx="18" cy="20" r="1.5" fill="currentColor"/>
+            </svg>
+            <span class="cart__count" aria-live="polite">0</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <nav id="mobile-menu" class="mobile-menu" aria-label="Mobile menu" hidden>
+      <div class="mobile-menu__backdrop" data-dismiss></div>
+      <div class="mobile-menu__panel">
+        <button class="mobile-menu__close" data-dismiss aria-label="Close menu">×</button>
+        <ul class="mobile-menu__list">
+          <li><a href="collection.html?cat=skincare">Skincare</a></li>
+          <li><a href="collection.html?cat=makeup">Makeup</a></li>
+          <li><a href="collection.html?cat=gifts">Gifts</a></li>
+          <li><a href="collection.html?cat=new">New Arrivals</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <main id="main">
+      <section class="collection-hero" aria-label="Category banner">
+        <div class="container collection-hero__inner">
+          <div>
+            <p class="eyebrow" id="collection-eyebrow">Shop by Category</p>
+            <h1 class="collection-title" id="collection-title">Collection</h1>
+            <p class="collection-tagline" id="collection-tagline">Discover luxury essentials tailored to you.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="collection" aria-labelledby="collection-title">
+        <div class="container collection__grid">
+          <aside class="filters" aria-label="Filters">
+            <div class="filter-group">
+              <h3 class="filter-title">Category</h3>
+              <label class="filter-check"><input type="checkbox" name="cat" value="skincare" /> Skincare</label>
+              <label class="filter-check"><input type="checkbox" name="cat" value="makeup" /> Makeup</label>
+              <label class="filter-check"><input type="checkbox" name="cat" value="gifts" /> Gifts</label>
+              <label class="filter-check"><input type="checkbox" name="cat" value="new" /> New Arrivals</label>
+            </div>
+
+            <div class="filter-group">
+              <h3 class="filter-title">Price</h3>
+              <div class="filter-row">
+                <input type="number" class="filter-input" id="price-min" placeholder="Min" aria-label="Min price" />
+                <span>—</span>
+                <input type="number" class="filter-input" id="price-max" placeholder="Max" aria-label="Max price" />
+              </div>
+            </div>
+
+            <div class="filter-group">
+              <h3 class="filter-title">Skin Type</h3>
+              <label class="filter-check"><input type="checkbox" name="skin" value="dry" /> Dry</label>
+              <label class="filter-check"><input type="checkbox" name="skin" value="oily" /> Oily</label>
+              <label class="filter-check"><input type="checkbox" name="skin" value="combo" /> Combination</label>
+              <label class="filter-check"><input type="checkbox" name="skin" value="normal" /> Normal</label>
+            </div>
+          </aside>
+
+          <div class="collection__content">
+            <div class="sort-bar">
+              <label for="sort" class="label">Sort by</label>
+              <select id="sort" class="select">
+                <option value="featured">Featured</option>
+                <option value="best">Best Sellers</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+              </select>
+            </div>
+
+            <div id="collection-grid" class="collection-grid" aria-live="polite"></div>
+            <div class="collection-actions">
+              <button id="load-more" class="btn" type="button">Load More</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Mini Cart Drawer / Toast / Cart Bar -->
+    <nav id="mini-cart" class="mini-cart" aria-label="Mini cart" hidden>
+      <div class="mini-cart__backdrop" data-dismiss></div>
+      <div class="mini-cart__panel" role="dialog" aria-modal="true" aria-labelledby="mini-cart-title">
+        <header class="mini-cart__header">
+          <h3 id="mini-cart-title">Your Cart</h3>
+          <button class="mini-cart__close" data-dismiss aria-label="Close cart">×</button>
+        </header>
+        <div class="mini-cart__content">
+          <ul class="mini-cart__items"></ul>
+        </div>
+        <footer class="mini-cart__footer">
+          <div class="mini-cart__subtotal"><span>Subtotal</span><strong class="mini-cart__subtotal-value">$0</strong></div>
+          <button class="btn btn--primary mini-cart__checkout" type="button" disabled>Checkout</button>
+        </footer>
+      </div>
+    </nav>
+    <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+    <div id="cart-bar" class="cart-bar" hidden>
+      <div class="cart-bar__info"><span class="cart-bar__count">0</span> items · <strong class="cart-bar__subtotal">$0</strong></div>
+      <button class="btn btn--primary btn--sm cart-bar__btn" type="button">View Cart</button>
+    </div>
+
+    <script defer src="app.js?v=13"></script>
+    <script defer src="collection.js?v=1"></script>
+  </body>
+  
+</html>
+
