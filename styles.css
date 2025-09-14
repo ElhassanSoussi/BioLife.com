@@ -70,11 +70,20 @@ body {
   font-family: 'Playfair Display', var(--font-sans);
   font-weight: 800; /* slightly less thick */
   text-transform: uppercase;
-  letter-spacing: 0.06em; /* tighter tracking */
+  letter-spacing: 0.04em; /* tighter tracking */
   font-size: clamp(2rem, 4.5vw, 3rem);
   line-height: 1;
   display: inline-block;
   padding: 6px 0;
+}
+.brand .brand-o{
+  display: inline-block;
+  font-size: 0.86em; /* slightly smaller 'o' */
+  line-height: 1;
+  transform: translateY(0.02em); /* optical alignment */
+  letter-spacing: 0; /* prevent extra spacing inside span */
+  margin-left: -0.02em;
+  margin-right: -0.02em;
 }
 .brand::after{
   content: "";
