@@ -4,15 +4,6 @@ on:
   push:
     branches: [ main ]
   workflow_dispatch:
-    inputs:
-      build:
-        description: 'Build type (none|vite|next)'
-        required: false
-        default: 'none'
-      publish_dir:
-        description: 'Directory to publish (., vite-react/dist, next-app/out)'
-        required: false
-        default: '.'
 
 permissions:
   contents: read
@@ -29,54 +20,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Setup Node (if building)
-        if: ${{ github.event.inputs.build == 'vite' || github.event.inputs.build == 'next' }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-          cache-dependency-path: |
-            vite-react/package.json
-            next-app/package.json
-      - name: Build Vite app
-        if: ${{ github.event.inputs.build == 'vite' }}
-        run: |
-          cd vite-react
-          npm ci
-          npm run build
-          echo "PUBLISH_DIR=vite-react/dist" >> $GITHUB_ENV
-      - name: Build Next app (static export)
-        if: ${{ github.event.inputs.build == 'next' }}
-        run: |
-          cd next-app
-          npm ci
-          npm run build
-          npx next export
-          echo "PUBLISH_DIR=next-app/out" >> $GITHUB_ENV
-      - name: Set publish dir default
-        if: ${{ github.event.inputs.build == '' || github.event.inputs.build == 'none' }}
-        run: |
-          echo "PUBLISH_DIR=${{ github.event.inputs.publish_dir || '.' }}" >> $GITHUB_ENV
-
-      - name: Determine publish dir
-        id: set_publish_dir
-        run: |
-          # prefer runtime env if set by earlier build steps, otherwise use input (or '.')
-          if [ -n "${PUBLISH_DIR}" ]; then
-            echo "publish_dir=${PUBLISH_DIR}" >> $GITHUB_OUTPUT
-          else
-            echo "publish_dir=${{ github.event.inputs.publish_dir || '.' }}" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Show publish dir (debug)
-        run: |
-          echo "Determined publish_dir=${{ steps.set_publish_dir.outputs.publish_dir }}"
-          ls -la "${{ steps.set_publish_dir.outputs.publish_dir }}" || echo "Directory not found"
-
-      - name: Upload artifact
+      - name: Upload static site
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ${{ steps.set_publish_dir.outputs.publish_dir }}
+          path: .
   deploy:
     environment:
       name: github-pages
