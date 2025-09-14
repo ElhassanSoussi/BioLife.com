@@ -184,7 +184,9 @@
         return `
           <article class="card" aria-labelledby="${pid}-title">
             <div class="card__media">
-              <img src="${p.image}" alt="${p.alt || p.name}" width="600" height="600" loading="lazy" />
+              <a href="product.html?id=${pid}" class="card__thumb" aria-label="${p.name}">
+                <img src="${p.image}" alt="${p.alt || p.name}" width="600" height="600" loading="lazy" />
+              </a>
               ${badges ? `<div class="badges">${badges}</div>` : ''}
               <div class="quickadd">
                 <button class="btn btn--primary btn--sm js-add" data-id="${pid}" type="button" aria-label="Quick add ${p.name}">Quick Add</button>

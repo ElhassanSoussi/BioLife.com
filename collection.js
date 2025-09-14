@@ -93,7 +93,9 @@
     return `
       <article class="card" aria-label="${p.name}">
         <div class="card__media">
-          <img src="${p.image}" alt="${p.name}" />
+          <a href="product.html?id=${p.id}" class="card__thumb" aria-label="${p.name}">
+            <img src="${p.image}" alt="${p.name}" />
+          </a>
           ${badge?`<div class="badges">${badge}</div>`:''}
         </div>
         <div class="card__body">
