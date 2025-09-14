@@ -265,11 +265,17 @@
 
   // Helpers
   const findProduct = (pid) => allProducts.find(p => p.id === pid || `p${allProducts.indexOf(p)+1}` === pid);
-  const addToCart = (pid, qty=1) => {
+  const addToCart = (pid, qty=1, opts) => {
     const p = findProduct(pid);
     if (!p) return null;
     const idx = cartItems.findIndex(i => i.id === p.id);
-    if (idx >= 0) cartItems[idx].qty += qty; else cartItems.push({ id: p.id, name: p.name, price: p.price, image: p.image, qty });
+    if (idx >= 0) {
+      cartItems[idx].qty += qty;
+      // update options only if provided
+      if (opts) cartItems[idx].options = opts;
+    } else {
+      cartItems.push({ id: p.id, name: p.name, price: p.price, image: p.image, qty, options: opts });
+    }
     saveCart(); updateBadge(); renderMiniCart(); updateBar();
     return { id: p.id, qty };
   };
@@ -294,10 +300,12 @@
     list.innerHTML = cartItems.map(i => {
       const p = findProduct(i.id) || i;
       const line = (i.qty * (p.price || 0)).toFixed(2);
+      const optText = i.options ? [i.options.shade && `Shade: ${i.options.shade}`, i.options.size && `Size: ${i.options.size}`].filter(Boolean).join(' • ') : '';
       return `<li class="mini-cart__item" data-id="${i.id}">
         <img src="${p.image}" alt="${p.name}" class="mini-cart__img"/>
         <div>
           <p class="mini-cart__name">${p.name}</p>
+          ${optText ? `<p class="mini-cart__price" style="margin:0 0 4px">${optText}</p>` : ''}
           <p class="mini-cart__price">$${p.price} × ${i.qty} = $${line}</p>
           <div class="mini-cart__qty">
             <button class="mini-cart__btn js-qty-dec" aria-label="Decrease">−</button>
@@ -378,7 +386,14 @@
     const viewBtn = e.target.closest('.js-view');
     if (addBtn) {
       const id = addBtn.getAttribute('data-id');
-      const payload = addToCart(id, 1);
+      // collect options if present (product detail page)
+      let opts;
+      const shadeEl = document.getElementById('shade');
+      const sizeEl = document.getElementById('size');
+      if (shadeEl || sizeEl){
+        opts = { shade: shadeEl ? shadeEl.value : undefined, size: sizeEl ? sizeEl.value : undefined };
+      }
+      const payload = addToCart(id, 1, opts);
       if (payload) showToast('Added to cart', payload);
     }
     if (viewBtn) {

@@ -21,6 +21,7 @@
         <img src="${i.image}" alt="${i.name}" class="mini-cart__img"/>
         <div>
           <p class="mini-cart__name">${i.name}</p>
+          ${i.options ? `<p class=\"mini-cart__price\" style=\"margin:0 0 4px\">${[i.options.shade&&`Shade: ${i.options.shade}`, i.options.size&&`Size: ${i.options.size}`].filter(Boolean).join(' • ')}</p>` : ''}
           <p class="mini-cart__price">$${i.price} × ${i.qty} = $${(i.price*i.qty).toFixed(2)}</p>
           <div class="mini-cart__qty">
             <button class="mini-cart__btn js-dec" aria-label="Decrease">−</button>
@@ -63,4 +64,3 @@
 
   render();
 })();
-

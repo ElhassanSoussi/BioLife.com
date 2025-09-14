@@ -367,6 +367,9 @@ body {
   border-top: 1px solid var(--divider);
 }
 .section-header{ margin-bottom: clamp(18px, 3.5vw, 28px); }
+.section-header{ display: flex; align-items: end; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.section-link{ color: var(--ink); text-decoration: none; font-weight: 700; border: 1px solid var(--divider); padding: 8px 12px; border-radius: 999px; background: #fff; }
+.section-link:hover{ border-color: #c9c9c9; }
 .section-title{
   margin: 0 0 8px;
   font-size: clamp(1.75rem, 3vw, 2.5rem);
