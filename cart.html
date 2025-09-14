@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Your Cart — Foireme</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=10" />
+  </head>
+  <body>
+    <header class="site-header" role="banner">
+      <div class="container header__inner">
+        <a href="index.html#main" class="brand" aria-label="Foireme home">F<span class="brand-o">o</span>ireme</a>
+        <nav class="primary-nav" aria-label="Primary">
+          <ul class="nav-list">
+            <li><a href="index.html#skincare">Skincare</a></li>
+            <li><a href="index.html#makeup">Makeup</a></li>
+            <li><a href="index.html#gifts">Gifts</a></li>
+          </ul>
+        </nav>
+        <div class="header-actions">
+          <a href="index.html" class="login" aria-label="Back to shopping">←</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="container" style="padding: 32px 24px 64px;">
+      <h1 style="margin:0 0 18px; font-weight:800; font-size: clamp(1.5rem, 3vw, 2rem);">Your Cart</h1>
+      <div id="cart-page" class="cart-page">
+        <ul class="cart-page__items"></ul>
+        <div class="cart-page__summary">
+          <div class="cart-page__row"><span>Subtotal</span><strong id="cart-subtotal">$0</strong></div>
+          <button id="cart-checkout" class="btn btn--primary" type="button">Proceed to Checkout</button>
+        </div>
+      </div>
+    </main>
+
+    <!-- Checkout modal placeholder -->
+    <div id="checkout-modal" class="modal" hidden>
+      <div class="modal__overlay" data-dismiss></div>
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="co-title">
+        <button class="modal__close" data-dismiss aria-label="Close">×</button>
+        <div class="modal__content">
+          <h3 id="co-title">Checkout</h3>
+          <p>This is a placeholder. Integrate your payment provider here.</p>
+        </div>
+      </div>
+    </div>
+
+    <script defer src="cart.js?v=1"></script>
+  </body>
+  
+</html>
+

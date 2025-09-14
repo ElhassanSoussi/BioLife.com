@@ -219,7 +219,7 @@
     if (!p) return null;
     const idx = cartItems.findIndex(i => i.id === p.id);
     if (idx >= 0) cartItems[idx].qty += qty; else cartItems.push({ id: p.id, name: p.name, price: p.price, image: p.image, qty });
-    saveCart(); updateBadge(); renderMiniCart();
+    saveCart(); updateBadge(); renderMiniCart(); updateBar();
     return { id: p.id, qty };
   };
   const removeFromCart = (pid, qty=1) => {
@@ -227,7 +227,7 @@
     if (i<0) return;
     cartItems[i].qty -= qty;
     if (cartItems[i].qty <= 0) cartItems.splice(i,1);
-    saveCart(); updateBadge(); renderMiniCart();
+    saveCart(); updateBadge(); renderMiniCart(); updateBar();
   };
 
   // Mini cart UI
@@ -265,6 +265,26 @@
   };
   renderMiniCart();
 
+  // Cart bar (mobile summary)
+  const bar = document.getElementById('cart-bar');
+  const barCount = () => bar && bar.querySelector('.cart-bar__count');
+  const barSubtotal = () => bar && bar.querySelector('.cart-bar__subtotal');
+  const barBtn = () => bar && bar.querySelector('.cart-bar__btn');
+  const updateBar = () => {
+    if (!bar) return;
+    const count = cartItems.reduce((s,i)=>s+i.qty,0);
+    const subtotal = cartItems.reduce((s,i)=>{ const p=findProduct(i.id)||{}; return s+(p.price||0)*i.qty; },0).toFixed(2);
+    if (count>0){
+      bar.hidden = false;
+      if (barCount()) barCount().textContent = String(count);
+      if (barSubtotal()) barSubtotal().textContent = `$${subtotal}`;
+    } else {
+      bar.hidden = true;
+    }
+  };
+  updateBar();
+  barBtn() && barBtn().addEventListener('click', ()=>{ window.location.assign('cart.html'); });
+
   // Open cart from header
   const cartBtn = document.querySelector('.cart');
   cartBtn && cartBtn.addEventListener('click', (e)=>{ e.preventDefault(); openMini(); });
@@ -277,6 +297,14 @@
     if (e.target.closest('.js-qty-dec')) { removeFromCart(id,1); }
     if (e.target.closest('.js-remove')) { const it = cartItems.find(x=>x.id===id); if (it) removeFromCart(id, it.qty); }
   });
+
+  // Hook mini-cart checkout to route
+  if (checkoutBtn()){
+    checkoutBtn().addEventListener('click', (e)=>{
+      e.preventDefault();
+      window.location.assign('cart.html');
+    });
+  }
 
   // Toast
   const toast = document.getElementById('toast');
