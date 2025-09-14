@@ -246,7 +246,7 @@ body {
   object-fit: cover;
   width: auto;
   height: auto;
-  border-radius: 16px;
+  border-radius: var(--radius);
   box-shadow: 0 20px 40px rgba(0,0,0,0.35);
   background: #1a1a1f;
 }
@@ -331,7 +331,7 @@ body {
 }
 
 .card{
-  border-radius: 16px;
+  border-radius: var(--radius);
   background: var(--surface);
   border: 1px solid var(--divider);
   overflow: hidden;
@@ -339,7 +339,35 @@ body {
   transition: transform .18s ease, box-shadow .18s ease;
 }
 .card:hover{ transform: translateY(-3px); box-shadow: 0 10px 24px rgba(16,24,40,0.12); }
-.card__media{ position: relative; aspect-ratio: 1 / 1; background: #f2eee8; }
+.card__media{ position: relative; aspect-ratio: 1 / 1; background: #f2eee8; overflow: hidden; }
+.card__media::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(11,31,58,0.55) 0%, rgba(11,31,58,0.0) 55%);
+  opacity: 0;
+  transition: opacity .2s ease;
+}
+.card:hover .card__media::after,
+.card:focus-within .card__media::after{ opacity: 1; }
+
+/* Quick Add overlay */
+.quickadd{
+  position: absolute;
+  left: 50%;
+  bottom: 12px;
+  transform: translate(-50%, 8px);
+  opacity: 0;
+  transition: opacity .2s ease, transform .2s ease;
+}
+.card:hover .quickadd,
+.card:focus-within .quickadd{ opacity: 1; transform: translate(-50%, 0); }
+.btn--sm{ padding: 10px 16px; font-size: 0.85rem; }
+
+@media (hover: none){
+  .card__media::after{ opacity: 0; }
+  .quickadd{ opacity: 1; transform: translate(-50%, 0); }
+}
 .card__media img{ width: 100%; height: 100%; object-fit: cover; display: block; }
 .badges{
   position: absolute; top: 10px; left: 10px; display: flex; gap: 6px; flex-wrap: wrap;
