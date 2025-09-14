@@ -65,9 +65,12 @@ body {
   text-decoration: none;
   font-family: 'Playfair Display', var(--font-sans);
   font-weight: 900;
-  letter-spacing: 0.08em;
-  font-size: clamp(1.5rem, 3.2vw, 2.5rem);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: clamp(2rem, 4.5vw, 3rem);
   line-height: 1;
+  display: inline-block;
+  padding: 6px 0;
 }
 .brand::after{
   content: "";
