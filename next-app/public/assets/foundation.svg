@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="960" viewBox="0 0 64 96"> 
+  <defs>
+    <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f3e3d3"/>
+      <stop offset="1" stop-color="#e8d2bd"/>
+    </linearGradient>
+    <linearGradient id="cap" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#1a2230"/>
+      <stop offset="1" stop-color="#0b1f3a"/>
+    </linearGradient>
+  </defs>
+  <rect x="10" y="8" width="44" height="80" rx="6" fill="url(#g1)" stroke="#e6e1d9"/>
+  <rect x="18" y="2" width="28" height="14" rx="3" fill="url(#cap)" />
+  <rect x="22" y="16" width="20" height="4" rx="2" fill="#fff" opacity=".35"/>
+</svg>
+

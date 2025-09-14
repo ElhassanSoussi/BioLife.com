@@ -1,0 +1,17 @@
+/* Reuse root styles with small tweaks for Next */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Inter, system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif; }
+
+/* Keep a neutral container and link to the root styles for now */
+/* In a real project we would split modules, but for demo keep it simple */
+
+/* Minimal reset for links and lists */
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; margin: 0; padding: 0; }
+
+/* We'll scope the imported root CSS to .site so it doesn't bleed if embedded */
+.site { all: initial; }
+.site * { all: revert; }
+

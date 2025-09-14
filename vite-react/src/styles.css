@@ -1,0 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+:root { --ink:#111; --divider:#e8e6e1; }
+*{ box-sizing: border-box }
+html,body{ height:100% }
+body{ margin:0; font-family: Inter, system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif; background:#fff; color:var(--ink) }
+img{ display:block; max-width:100% }
+
