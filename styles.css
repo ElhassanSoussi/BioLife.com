@@ -635,6 +635,7 @@ body {
 .mini-cart__footer{ border-top: 1px solid var(--divider); padding: 12px 16px; display: grid; gap: 10px; }
 .mini-cart__subtotal{ display: flex; align-items: center; justify-content: space-between; color: var(--ink); }
 .mini-cart__checkout{ width: 100%; }
+.mini-cart__continue{ width: 100%; text-align: center; background: #fff; border: 1px solid var(--divider); color: var(--ink); }
 
 /* Toast */
 .toast{ position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); background: #111; color: #fff; padding: 10px 14px; border-radius: 999px; font-size: 0.95rem; display: none; align-items: center; gap: 12px; z-index: 260; }
