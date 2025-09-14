@@ -119,30 +119,48 @@
         </section>
 
         <div class="footer-grid">
-          <section class="footer-col" aria-labelledby="about-title">
-            <h4 id="about-title" class="footer-title">About Foireme</h4>
-            <p class="footer-text">Modern formulas, clean ingredients, and effortless results—crafted to let your natural beauty shine.</p>
-          </section>
+          <details class="footer-section" id="footer-about">
+            <summary class="footer-title">About Foireme</summary>
+            <div class="footer-content">
+              <p class="footer-text">Modern formulas, clean ingredients, and effortless results—crafted to let your natural beauty shine.</p>
+            </div>
+          </details>
 
-          <nav class="footer-col" aria-labelledby="care-title">
-            <h4 id="care-title" class="footer-title">Customer Care</h4>
-            <ul class="footer-links">
-              <li><a href="#shipping">Shipping &amp; Returns</a></li>
-              <li><a href="#contact">Contact</a></li>
-              <li><a href="#faq">FAQ</a></li>
-            </ul>
-          </nav>
+          <details class="footer-section" id="footer-care">
+            <summary class="footer-title">Customer Care</summary>
+            <div class="footer-content">
+              <ul class="footer-links">
+                <li><a href="#shipping">Shipping &amp; Returns</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#faq">FAQ</a></li>
+              </ul>
+            </div>
+          </details>
 
-          <nav class="footer-col" aria-labelledby="shop-title">
-            <h4 id="shop-title" class="footer-title">Shop</h4>
-            <ul class="footer-links">
-              <li><a href="#skincare">Skincare</a></li>
-              <li><a href="#makeup">Makeup</a></li>
-              <li><a href="#gifts">Gifts</a></li>
-            </ul>
-          </nav>
-
+          <details class="footer-section" id="footer-shop">
+            <summary class="footer-title">Shop</summary>
+            <div class="footer-content">
+              <ul class="footer-links">
+                <li><a href="#skincare">Skincare</a></li>
+                <li><a href="#makeup">Makeup</a></li>
+                <li><a href="#gifts">Gifts</a></li>
+              </ul>
+            </div>
+          </details>
         </div>
+
+        <section class="footer-newsletter" aria-labelledby="newsletter-title-2">
+          <h3 id="newsletter-title-2" class="footer-newsletter__title">Newsletter</h3>
+          <form id="newsletter-form" class="footer-form" action="#subscribe" method="post" novalidate>
+            <label for="footer-email" class="sr-only">Email address</label>
+            <div class="footer-input-wrap">
+              <input id="footer-email" name="email" class="footer-input" type="email" placeholder="Enter your email" required />
+              <button class="btn btn--primary footer-btn" type="submit">Subscribe</button>
+            </div>
+            <p class="footer-hint">We’ll email you news and offers.</p>
+            <p class="footer-success" aria-live="polite" hidden>Thanks! You’re subscribed.</p>
+          </form>
+        </section>
 
         <div class="footer-bottom"><p>©2025 Foireme</p></div>
       </div>
