@@ -1,12 +1,13 @@
 // Temporary hardcoded product data and renderer
 // Replace these with real images/data later.
 (function () {
-  const products = [
+  const allProducts = [
     {
       id: 'p1',
       name: 'Velvet Skin Foundation',
-      image: 'https://source.unsplash.com/600x600/?foundation,makeup',
+      image: 'assets/photos/foundation.jpg',
       alt: 'Velvet Skin Foundation bottle',
+      description: 'Weightless, buildable coverage with a natural finish.',
       price: 34,
       rating: 5,
       reviews: 312,
@@ -22,8 +23,9 @@
     {
       id: 'p2',
       name: 'Glow Boost Serum',
-      image: 'https://source.unsplash.com/600x600/?serum,skincare',
+      image: 'assets/photos/serum.jpg',
       alt: 'Glow Boost Serum bottle',
+      description: 'Brightens dull skin and boosts radiance.',
       price: 28,
       rating: 4,
       reviews: 98,
@@ -38,8 +40,9 @@
     {
       id: 'p3',
       name: 'Pro Finish Brush',
-      image: 'https://source.unsplash.com/600x600/?brush,makeup',
+      image: 'assets/photos/brush.jpg',
       alt: 'Pro Finish Brush',
+      description: 'Soft synthetic bristles for streak-free blending.',
       price: 22,
       rating: 5,
       reviews: 1100,
@@ -53,8 +56,9 @@
     {
       id: 'p4',
       name: 'Silk Matte Lipstick',
-      image: 'https://source.unsplash.com/600x600/?lipstick,makeup',
+      image: 'assets/photos/lipstick.jpg',
       alt: 'Silk Matte Lipstick',
+      description: 'Velvety-matte color that feels comfortable.',
       price: 18,
       rating: 4,
       reviews: 245,
@@ -69,8 +73,9 @@
     {
       id: 'p5',
       name: 'Everyday Eyeshadow Palette',
-      image: 'https://source.unsplash.com/600x600/?palette,makeup',
+      image: 'assets/photos/palette.jpg',
       alt: 'Everyday Eyeshadow Palette',
+      description: 'Nine wearable shades in matte and shimmer.',
       price: 26,
       rating: 5,
       reviews: 534,
@@ -83,8 +88,9 @@
     {
       id: 'p6',
       name: 'HydraSoft Moisturizer',
-      image: 'https://source.unsplash.com/600x600/?moisturizer,skincare',
+      image: 'assets/photos/moisturizer.jpg',
       alt: 'HydraSoft Moisturizer',
+      description: 'Lightweight daily hydration that lasts 24 hours.',
       price: 24,
       rating: 4,
       reviews: 189,
@@ -138,6 +144,7 @@
             </div>
             <div class="card__body">
               <h3 id="${pid}-title" class="card__title">${p.name}</h3>
+              <p class="card__desc">${p.description || ''}</p>
               <div class="rating" aria-label="Rated ${p.rating} out of 5">
                 <span class="stars" style="--rating:${p.rating}" aria-hidden="true"></span>
                 <span class="rating__count">(${formatCount(p.reviews)})</span>
@@ -151,7 +158,19 @@
       .join('');
   }
 
-  render(products);
+  // Initial render
+  render(allProducts);
+
+  // Search filtering (by name or description)
+  const searchEl = document.querySelector('.search--compact .search__input');
+  if (searchEl){
+    const doFilter = () => {
+      const q = (searchEl.value || '').toLowerCase();
+      if (!q){ render(allProducts); return; }
+      render(allProducts.filter(p => (p.name+" "+(p.description||'')).toLowerCase().includes(q)));
+    };
+    searchEl.addEventListener('input', doFilter);
+  }
 
   // Cart counter wiring
   const CART_KEY = 'foireme_cart_count';

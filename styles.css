@@ -354,6 +354,8 @@ body {
 }
 .card:hover{ transform: translateY(-3px); box-shadow: 0 10px 24px rgba(16,24,40,0.12); }
 .card__media{ position: relative; aspect-ratio: 1 / 1; background: #f2eee8; overflow: hidden; }
+.card__media img{ transition: transform .25s ease; }
+.card:hover .card__media img{ transform: scale(1.05); }
 .card__media::after{
   content: "";
   position: absolute;
@@ -395,7 +397,8 @@ body {
 .badge--limited{ background: #f8b4b4; }
 
 .card__body{ padding: 14px 14px 16px; }
-.card__title{ margin: 0 0 8px; font-size: 1.0625rem; font-family: var(--font-sans); letter-spacing: 0; }
+.card__title{ margin: 0 0 6px; font-size: 1.0625rem; font-family: var(--font-sans); letter-spacing: 0; }
+.card__desc{ margin: 0 0 8px; color: var(--muted); font-size: 0.95rem; }
 .card__meta{ color: var(--muted); font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
 .price{ color: var(--text); font-weight: 700; }
 
