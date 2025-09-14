@@ -57,10 +57,21 @@ jobs:
         if: ${{ github.event.inputs.build == '' || github.event.inputs.build == 'none' }}
         run: |
           echo "PUBLISH_DIR=${{ github.event.inputs.publish_dir || '.' }}" >> $GITHUB_ENV
+
+      - name: Determine publish dir
+        id: set_publish_dir
+        run: |
+          # prefer runtime env if set by earlier build steps, otherwise use input (or '.')
+          if [ -n "${PUBLISH_DIR}" ]; then
+            echo "publish_dir=${PUBLISH_DIR}" >> $GITHUB_OUTPUT
+          else
+            echo "publish_dir=${{ github.event.inputs.publish_dir || '.' }}" >> $GITHUB_OUTPUT
+          fi
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ${{ env.PUBLISH_DIR }}
+          path: ${{ steps.set_publish_dir.outputs.publish_dir }}
   deploy:
     environment:
       name: github-pages
