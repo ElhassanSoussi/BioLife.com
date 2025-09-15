@@ -413,8 +413,8 @@ body {
 .card__media{ position: relative; aspect-ratio: 1 / 1; background: #f2eee8; overflow: hidden; }
 .collection-grid .card__media{ aspect-ratio: 4 / 5; }
 .card__media .card__thumb{ display:block; width:100%; height:100%; }
-.card__media img{ transition: transform .25s ease; }
-.card:hover .card__media img{ transform: scale(1.05); }
+.card__media img{ transition: transform .25s ease, filter .25s ease; }
+.card:hover .card__media img{ transform: scale(1.03); filter: saturate(1.02); }
 .card__media::after{
   content: "";
   position: absolute;
@@ -679,6 +679,9 @@ body {
 .sort-bar{ display: inline-grid; grid-auto-flow: column; align-items: center; gap: 10px; justify-content: end; }
 .collection-grid{ display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(14px, 2vw, 24px); }
 @media (min-width: 1201px){ .collection-grid{ grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+.collection-title{ margin: 6px 0 8px; font-weight: 800; font-size: clamp(1.75rem, 3.5vw, 2.5rem); letter-spacing: -0.01em; }
+.collection-title::after{ content:""; display:block; width:48px; height:2px; background: var(--accent); margin-top:10px; }
+@media (min-width: 1600px){ .collection-grid{ grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; } }
 .collection-actions{ display: grid; justify-content: center; padding: 8px 0 0; }
 
 @media (max-width: 1200px){ .collection-grid{ grid-template-columns: repeat(4, minmax(0, 1fr)); } }
