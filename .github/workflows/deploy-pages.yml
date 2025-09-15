@@ -22,6 +22,16 @@ jobs:
         uses: actions/checkout@v4
       - name: Configure Pages
         uses: actions/configure-pages@v5
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Minify CSS/JS
+        run: |
+          npx csso styles.css --output styles.css || true
+          for f in app.js product.js collection.js cart.js checkout.js account.js orders.js addresses.js wishlist.js; do
+            if [ -f "$f" ]; then npx terser "$f" -c -m -o "$f"; fi
+          done
       - name: Upload static site
         uses: actions/upload-pages-artifact@v3
         with:
