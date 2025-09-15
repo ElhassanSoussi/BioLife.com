@@ -91,7 +91,7 @@
   function card(p){
     const badge = p.best ? '<span class="badge badge--best">Best</span>' : (p.new ? '<span class="badge badge--new">New</span>' : '');
     return `
-      <article class="card" aria-label="${p.name}">
+      <article class="card" data-id="${p.id}" aria-label="${p.name}">
         <div class="card__media">
           <a href="product.html?id=${p.id}" class="card__thumb" aria-label="${p.name}">
             <img src="${p.image}" alt="${p.name}" />

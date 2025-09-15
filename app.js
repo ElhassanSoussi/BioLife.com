@@ -182,7 +182,7 @@
           p.size ? '<span class="meta-dot" aria-hidden="true">•</span><span class="size">' + p.size + '</span>' : ''
         ].join('');
         return `
-          <article class="card" aria-labelledby="${pid}-title">
+          <article class="card" data-id="${pid}" aria-labelledby="${pid}-title">
             <div class="card__media">
               <a href="product.html?id=${pid}" class="card__thumb" aria-label="${p.name}">
                 <img src="${p.image}" alt="${p.alt || p.name}" width="600" height="600" loading="lazy" />
@@ -384,6 +384,7 @@
   document.addEventListener('click', (e) => {
     const addBtn = e.target.closest('.js-add');
     const viewBtn = e.target.closest('.js-view');
+    const card = e.target.closest('.card');
     if (addBtn) {
       const id = addBtn.getAttribute('data-id');
       // collect options if present (product detail page)
@@ -400,6 +401,11 @@
       const id = viewBtn.getAttribute('data-id');
       const p = findProduct(id);
       if (p) openModal(p);
+    }
+    // Navigate when clicking anywhere on the card except on buttons/links
+    if (card && !e.target.closest('button, .btn, a')){
+      const id = card.getAttribute('data-id');
+      if (id) window.location.assign(`product.html?id=${id}`);
     }
   });
 
