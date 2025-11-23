@@ -152,7 +152,7 @@
   ];
 
   const badgeClass = (tag) => {
-    const t = tag.toLowerCase();
+    const t = (tag || '').toLowerCase();
     if (t.includes('best')) return 'badge badge--best';
     if (t.includes('new')) return 'badge badge--new';
     if (t.includes('limit')) return 'badge badge--limited';
@@ -175,7 +175,7 @@
           .map((t) => `<span class="${badgeClass(t)}">${t}</span>`) 
           .join('');
         const swatches = (p.swatches || [])
-          .map((s) => `<button class="swatch" aria-label="${s.name}" style="--sw:${s.hex}"></button>`) 
+          .map((s) => `<button type="button" class="swatch" aria-label="${s.name}" style="--sw:${s.hex}"></button>`) 
           .join('');
         const meta = [
           `<span class="price">$${p.price}</span>`,
@@ -190,11 +190,10 @@
               ${badges ? `<div class="badges">${badges}</div>` : ''}
               <div class="quickadd">
                 <button class="btn btn--primary btn--sm js-add" data-id="${pid}" type="button" aria-label="Quick add ${p.name}">Quick Add</button>
-                <button class="btn btn--sm js-view" data-id="${pid}" type="button" aria-label="Quick view ${p.name}" style="background:#fff;border:1px solid var(--divider);color:var(--ink)">Quick View</button>
               </div>
             </div>
             <div class="card__body">
-              <h3 id="${pid}-title" class="card__title">${p.name}</h3>
+              <h3 id="${pid}-title" class="card__title"><a href="product.html?id=${pid}" class="card__link">${p.name}</a></h3>
               <p class="card__desc">${p.description || ''}</p>
               <div class="rating" aria-label="Rated ${p.rating} out of 5">
                 <span class="stars" style="--rating:${p.rating}" aria-hidden="true"></span>
@@ -354,7 +353,7 @@
     const id = item.getAttribute('data-id');
     if (e.target.closest('.js-qty-inc')) { addToCart(id,1); }
     if (e.target.closest('.js-qty-dec')) { removeFromCart(id,1); }
-    if (e.target.closest('.js-remove')) { const it = cartItems.find(x=>x.id===id); if (it) removeFromCart(id, it.qty); }
+    if (e.target.closest('.js-remove')) { const it = cartItems.find(x=>x.id===id); if (it) removeFromCart(it.id, it.qty); }
   });
 
   // Hook mini-cart checkout to route
@@ -397,13 +396,9 @@
       const payload = addToCart(id, 1, opts);
       if (payload) showToast('Added to cart', payload);
     }
-    if (viewBtn) {
-      const id = viewBtn.getAttribute('data-id');
-      const p = findProduct(id);
-      if (p) openModal(p);
-    }
     // Navigate when clicking anywhere on the card except on buttons/links
     if (card && !e.target.closest('button, .btn, a')){
+      e.preventDefault();
       const id = card.getAttribute('data-id');
       if (id) window.location.assign(`product.html?id=${id}`);
     }
