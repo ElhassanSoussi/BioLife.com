@@ -50,106 +50,21 @@
   }
 
   loadPromos().then(cfg => { renderGlobalPromo(cfg); applyHomepageHero(cfg); });
-  const allProducts = [
-    {
-      id: 'p1',
-      name: 'Velvet Skin Foundation',
-      image: 'assets/photos/foundation.jpg',
-      alt: 'Velvet Skin Foundation bottle',
-      description: 'Weightless, buildable coverage with a natural finish.',
-      price: 34,
-      rating: 5,
-      reviews: 312,
-      size: '30 ml',
-      tags: ['Best Seller'],
-      swatches: [
-        { name: 'Porcelain', hex: '#f2d6c9' },
-        { name: 'Sand', hex: '#e6b89f' },
-        { name: 'Honey', hex: '#c88f6d' },
-        { name: 'Mocha', hex: '#8a5a40' },
-      ],
-    },
-    {
-      id: 'p2',
-      name: 'Glow Boost Serum',
-      image: 'assets/photos/serum.jpg',
-      alt: 'Glow Boost Serum bottle',
-      description: 'Brightens dull skin and boosts radiance.',
-      price: 28,
-      rating: 4,
-      reviews: 98,
-      size: '50 ml',
-      tags: ['New'],
-      swatches: [
-        { name: 'Clear', hex: '#ffffff' },
-        { name: 'Rose', hex: '#ffd1dc' },
-        { name: 'Champagne', hex: '#ffe1a8' },
-      ],
-    },
-    {
-      id: 'p3',
-      name: 'Pro Finish Brush',
-      image: 'assets/photos/brush.jpg',
-      alt: 'Pro Finish Brush',
-      description: 'Soft synthetic bristles for streak-free blending.',
-      price: 22,
-      rating: 5,
-      reviews: 1100,
-      tags: ['Best Seller'],
-      swatches: [
-        { name: 'Matte Black', hex: '#111111' },
-        { name: 'Champagne Gold', hex: '#e9b17d' },
-        { name: 'Pearl', hex: '#faf7f2' },
-      ],
-    },
-    {
-      id: 'p4',
-      name: 'Silk Matte Lipstick',
-      image: 'assets/photos/lipstick.jpg',
-      alt: 'Silk Matte Lipstick',
-      description: 'Velvety-matte color that feels comfortable.',
-      price: 18,
-      rating: 4,
-      reviews: 245,
-      tags: ['Limited'],
-      swatches: [
-        { name: 'Rosewood', hex: '#a3484a' },
-        { name: 'Coral', hex: '#ff6f61' },
-        { name: 'Ruby', hex: '#c21807' },
-        { name: 'Nude', hex: '#caa186' },
-      ],
-    },
-    {
-      id: 'p5',
-      name: 'Everyday Eyeshadow Palette',
-      image: 'assets/photos/palette.jpg',
-      alt: 'Everyday Eyeshadow Palette',
-      description: 'Nine wearable shades in matte and shimmer.',
-      price: 26,
-      rating: 5,
-      reviews: 534,
-      swatches: [
-        { name: 'Cool Taupe', hex: '#b4a89e' },
-        { name: 'Warm Bronze', hex: '#b08157' },
-        { name: 'Deep Espresso', hex: '#3b2b20' },
-      ],
-    },
-    {
-      id: 'p6',
-      name: 'HydraSoft Moisturizer',
-      image: 'assets/photos/moisturizer.jpg',
-      alt: 'HydraSoft Moisturizer',
-      description: 'Lightweight daily hydration that lasts 24 hours.',
-      price: 24,
-      rating: 4,
-      reviews: 189,
-      tags: [],
-      swatches: [
-        { name: 'Travel', hex: '#cfd8dc' },
-        { name: 'Standard', hex: '#eceff1' },
-      ],
-    },
-  ];
+
+  let allProducts = [];
+
+  async function loadProducts() {
+    try {
+      const res = await fetch('data/products.json', { cache: 'no-store' });
+      if (!res.ok) throw new Error('Failed to load products');
+      allProducts = await res.json();
+      render(allProducts);
+      // Re-initialize cart-dependent features that need allProducts
+      reinit();
+    } catch (err) {
+      console.warn('Products failed to load; using empty array', err);
+    }
+  }
 
   const badgeClass = (tag) => {
     const t = (tag || '').toLowerCase();
@@ -209,7 +124,8 @@
   }
 
   // Initial render
-  render(allProducts);
+  // render(allProducts);
+  loadProducts();
 
   // Search filtering (by name or description)
   const searchEl = document.querySelector('.search--compact .search__input');
@@ -263,7 +179,7 @@
   updateBadge();
 
   // Helpers
-  const findProduct = (pid) => allProducts.find(p => p.id === pid || `p${allProducts.indexOf(p)+1}` === pid);
+  const findProduct = (pid) => allProducts.find(p => p.id === pid);
   const addToCart = (pid, qty=1, opts) => {
     const p = findProduct(pid);
     if (!p) return null;
@@ -316,7 +232,7 @@
       </li>`;
     }).join('');
     const subtotal = cartItems.reduce((s,i)=>{
-      const p = findProduct(i.id) || {}; return s + (p.price||0)*i.qty;
+      const p = findProduct(i.id); return s + (p ? p.price * i.qty : 0);
     },0).toFixed(2);
     if (subtotalEl()) subtotalEl().textContent = `$${subtotal}`;
     if (checkoutBtn()) checkoutBtn().disabled = false;
@@ -331,7 +247,7 @@
   const updateBar = () => {
     if (!bar) return;
     const count = cartItems.reduce((s,i)=>s+i.qty,0);
-    const subtotal = cartItems.reduce((s,i)=>{ const p=findProduct(i.id)||{}; return s+(p.price||0)*i.qty; },0).toFixed(2);
+    const subtotal = cartItems.reduce((s,i)=>{ const p=findProduct(i.id); return s+(p ? p.price*i.qty : 0); },0).toFixed(2);
     if (count>0){
       bar.hidden = false;
       if (barCount()) barCount().textContent = String(count);
@@ -403,6 +319,12 @@
       if (id) window.location.assign(`product.html?id=${id}`);
     }
   });
+
+  // This function re-initializes parts of the app that depend on allProducts
+  function reinit() {
+    renderMiniCart();
+    updateBar();
+  }
 
   // Search expand toggle
   const search = document.querySelector('.search--compact');

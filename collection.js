@@ -18,12 +18,12 @@
 
   // Hero content per category
   const presets = {
-    skincare: { title:'Skincare', tagline:'Targeted care, clean ingredients.', image:'assets/photos/serum.jpg' },
-    makeup:   { title:'Makeup', tagline:'Effortless color, luxury finishes.', image:'assets/photos/palette.jpg' },
-    gifts:    { title:'Gifts', tagline:'Curated sets for every occasion.', image:'assets/photos/brush.jpg' },
-    new:      { title:'New Arrivals', tagline:'Fresh formulas to fall in love with.', image:'assets/photos/lipstick.jpg' }
+    skincare: { title:'Skincare', tagline:'Targeted care, clean ingredients.', image:'https://images.unsplash.com/photo-1556228852-6d45a7d8e44a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80' },
+    makeup:   { title:'Makeup', tagline:'Effortless color, luxury finishes.', image:'https://images.unsplash.com/photo-1629904852311-5a8f224951b1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80' },
+    gifts:    { title:'Gifts', tagline:'Curated sets for every occasion.', image:'https://images.unsplash.com/photo-1590439242252-086a784998c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80' },
+    new:      { title:'New Arrivals', tagline:'Fresh formulas to fall in love with.', image:'https://images.unsplash.com/photo-1586495733353-5adef1041158?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80' }
   };
-  let preset = presets[cat] || { title:'Shop', tagline:'Discover luxury essentials tailored to you.', image:'assets/photos/foundation.jpg' };
+  let preset = presets[cat] || { title:'Shop', tagline:'Discover luxury essentials tailored to you.', image:'https://images.unsplash.com/photo-1596462502278-27bfdc403348?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80' };
   const titleEl = document.getElementById('collection-title');
   const tagEl = document.getElementById('collection-tagline');
   titleEl && (titleEl.textContent = preset.title);
