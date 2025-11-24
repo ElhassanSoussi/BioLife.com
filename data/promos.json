@@ -11,7 +11,23 @@
     "enabled": true,
     "title": "Free Brush & More",
     "subtitle": "Upgrade your routine with our best-sellers for a flawless finish.",
-    "cta": { "label": "Shop Now", "href": "#shop" }
+    "cta": {
+      "label": "Shop Now",
+      "href": "#shop"
+    },
+    "images": [
+      {
+        "src": "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80",
+        "alt": "Flawless Finish Foundation"
+      },
+      {
+        "src": "https://images.unsplash.com/photo-1526947425960-945c6e72858f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+        "alt": "Pro-Definition Makeup Brush"
+      },
+      {
+        "src": "/uploads/1763958101152-pexels-ron-lach-8128692 (1).jpg"
+      }
+    ]
   },
   "categories": {
     "skincare": {
@@ -38,6 +54,7 @@
       "tagline": "Fresh formulas to fall in love with.",
       "image": "assets/photos/lipstick.jpg"
     }
-  }
+  },
+  "page_title": "Foireme - Modern Beauty & Skincare",
+  "page_description": "Discover our collection of clean, effective skincare and makeup. Shop best-sellers, new arrivals, and curated gift sets."
 }
-

@@ -1,141 +1,191 @@
 [
   {
+    "id": "p1763954176306",
+    "name": "holo",
+    "price": 15.99,
+    "image": "/uploads/1763958128261-pexels-kpaukshtite-2417855.jpg",
+    "category": "New Arrivals",
+    "alt": "gg",
+    "tags": [],
+    "rating": 0,
+    "reviews": 0,
+    "skin": [
+      "all"
+    ]
+  },
+  {
     "id": "p001",
     "name": "Luxe Satin Lipstick",
-    "price": 28.00,
-    "image": "https://images.unsplash.com/photo-1590155289499-549129865b58?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80",
+    "price": 28,
+    "image": "/uploads/1763952943666-pexels-828860-2536009.jpg",
     "alt": "Luxe Satin Lipstick in a sleek black tube",
     "category": "Makeup",
-    "tags": ["Best Seller", "New"],
-    "rating": 4.5,
-    "reviews": 120,
-    "skin": ["all"]
+    "tags": [],
+    "rating": 0,
+    "reviews": 0,
+    "skin": [
+      "all"
+    ]
   },
   {
     "id": "p002",
     "name": "Flawless Finish Foundation",
-    "price": 42.00,
-    "image": "https://images.unsplash.com/photo-1526947425960-945c6e72858f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+    "price": 42,
+    "image": "/uploads/1763952916784-pexels-828860-2688991.jpg",
     "alt": "Bottle of Flawless Finish Foundation",
     "category": "Makeup",
-    "rating": 4.8,
-    "reviews": 250,
-    "skin": ["all"]
+    "rating": 0,
+    "reviews": 0,
+    "skin": [
+      "all"
+    ],
+    "tags": []
   },
   {
     "id": "p003",
     "name": "Radiant Glow Serum",
-    "price": 55.00,
-    "image": "https://images.unsplash.com/photo-1586495733353-5adef1041158?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80",
+    "price": 55,
+    "image": "/uploads/1763952851623-pexels-828860-2688991.jpg",
     "alt": "Glass bottle of Radiant Glow Serum",
     "category": "Skincare",
-    "tags": ["Best Seller"],
-    "rating": 4.9,
-    "reviews": 310,
-    "skin": ["dry", "normal"]
+    "tags": [],
+    "rating": 0,
+    "reviews": 0,
+    "skin": [
+      "all"
+    ]
   },
   {
     "id": "p004",
     "name": "Artist's Eye Palette",
-    "price": 48.00,
-    "image": "https://images.unsplash.com/photo-1519415943484-2fa18734d2ac?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80",
+    "price": 48,
+    "image": "/uploads/1763952864691-pexels-natalia-hawthorne-2149934-3785147.jpg",
     "alt": "Artist's Eye Palette with various eyeshadow colors",
     "category": "Makeup",
-    "tags": ["New"],
-    "rating": 4.7,
-    "reviews": 95,
-    "skin": ["all"]
+    "tags": [],
+    "rating": 0,
+    "reviews": 0,
+    "skin": [
+      "all"
+    ]
   },
   {
     "id": "p005",
     "name": "Pro-Definition Brush Set",
-    "price": 65.00,
+    "price": 65,
     "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
     "alt": "A set of professional makeup brushes",
     "category": "Makeup",
-    "tags": ["Gift"],
+    "tags": [
+      "Gift"
+    ],
     "rating": 4.9,
     "reviews": 180,
-    "skin": ["all"]
+    "skin": [
+      "all"
+    ]
   },
   {
     "id": "p006",
     "name": "Hydrating Cream Cleanser",
-    "price": 32.00,
+    "price": 32,
     "image": "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80",
     "alt": "Tube of Hydrating Cream Cleanser",
     "category": "Skincare",
     "rating": 4.6,
     "reviews": 150,
-    "skin": ["dry", "normal"]
+    "skin": [
+      "dry",
+      "normal"
+    ]
   },
   {
     "id": "p007",
     "name": "Volumizing Mascara",
-    "price": 25.00,
-    "image": "https://images.unsplash.com/photo-1580892229255-c27b9382a24a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80",
+    "price": 25,
+    "image": "/uploads/1763953782229-pexels-valeriya-90297.jpg",
     "alt": "Wand and tube of Volumizing Mascara",
     "category": "Makeup",
-    "rating": 4.5,
-    "reviews": 210,
-    "skin": ["all"]
+    "rating": 0,
+    "reviews": 0,
+    "skin": [
+      "all"
+    ],
+    "tags": []
   },
   {
     "id": "p008",
     "name": "Matte Velvet Concealer",
-    "price": 26.00,
-    "image": "https://images.unsplash.com/photo-1616099194299-a5339a3a2387?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80",
+    "price": 26,
+    "image": "/uploads/1763953797224-pexels-steven-john-pascua-1663900-4416763.jpg",
     "alt": "Tube of Matte Velvet Concealer",
     "category": "Makeup",
-    "tags": ["New"],
-    "rating": 4.7,
-    "reviews": 130,
-    "skin": ["oily", "normal"]
+    "tags": [],
+    "rating": 0,
+    "reviews": 0,
+    "skin": [
+      "all"
+    ]
   },
   {
     "id": "p009",
     "name": "Rosewater Balancing Toner",
-    "price": 35.00,
-    "image": "https://images.unsplash.com/photo-1617897903246-719891541d33?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80",
+    "price": 35,
+    "image": "/uploads/1763953810201-pexels-ron-lach-8128692.jpg",
     "alt": "Bottle of Rosewater Balancing Toner",
     "category": "Skincare",
-    "rating": 4.8,
-    "reviews": 190,
-    "skin": ["all"]
+    "rating": 0,
+    "reviews": 0,
+    "skin": [
+      "all"
+    ],
+    "tags": []
   },
   {
     "id": "p010",
     "name": "Glow-Up Highlighter Duo",
-    "price": 38.00,
+    "price": 38,
     "image": "https://images.unsplash.com/photo-1515688594390-b649af70d282?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80",
     "alt": "Compact of Glow-Up Highlighter Duo",
     "category": "Makeup",
-    "tags": ["Best Seller"],
+    "tags": [
+      "Best Seller"
+    ],
     "rating": 4.9,
     "reviews": 280,
-    "skin": ["all"]
+    "skin": [
+      "all"
+    ]
   },
   {
     "id": "p011",
     "name": "Luxury Skincare Gift Set",
-    "price": 120.00,
+    "price": 120,
     "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80",
     "alt": "A curated gift set of luxury skincare products",
     "category": "Skincare",
-    "tags": ["Gift", "Limited Edition"],
-    "rating": 5.0,
+    "tags": [
+      "Gift",
+      "Limited Edition"
+    ],
+    "rating": 5,
     "reviews": 90,
-    "skin": ["all"]
+    "skin": [
+      "all"
+    ]
   },
   {
     "id": "p012",
     "name": "Precision Liquid Eyeliner",
-    "price": 22.00,
-    "image": "https://images.unsplash.com/photo-1588772422828-237143c4af9f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80",
+    "price": 22,
+    "image": "/uploads/1763953825332-pexels-natalia-hawthorne-2149934-3785147.jpg",
     "alt": "Precision Liquid Eyeliner pen",
     "category": "Makeup",
-    "rating": 4.6,
-    "reviews": 175,
-    "skin": ["all"]
+    "rating": 0,
+    "reviews": 0,
+    "skin": [
+      "all"
+    ],
+    "tags": []
   }
 ]

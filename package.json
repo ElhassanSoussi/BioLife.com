@@ -1,0 +1,27 @@
+{
+  "name": "foireme",
+  "version": "1.0.0",
+  "description": "**Live site**",
+  "main": "account.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npx nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ElhassanSoussi/foireme.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ElhassanSoussi/foireme/issues"
+  },
+  "homepage": "https://github.com/ElhassanSoussi/foireme#readme",
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "multer": "^2.0.2"
+  }
+}

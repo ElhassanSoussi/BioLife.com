@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Promotions — Foireme</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=12" />
+    <style>
+      :root {
+        --admin-bg: #f6f6f7;
+        --admin-sidebar-bg: #1e293b;
+        --admin-sidebar-text: #f8fafc;
+        --admin-sidebar-active-bg: #334155;
+        --admin-border-color: #e5e7eb;
+        --admin-text-light: #6b7280;
+      }
+      body { background-color: var(--admin-bg); font-family: 'Inter', sans-serif; }
+      .admin-layout { display: flex; min-height: 100vh; }
+      .admin-sidebar { width: 240px; background-color: var(--admin-sidebar-bg); color: var(--admin-sidebar-text); padding: 20px; }
+      .admin-sidebar .brand { font-size: 24px; font-weight: 700; color: var(--admin-sidebar-text); text-decoration: none; display: block; margin-bottom: 40px; }
+      .admin-nav-list { list-style: none; padding: 0; margin: 0; }
+      .admin-nav-list a { display: block; padding: 12px 16px; text-decoration: none; color: var(--admin-sidebar-text); border-radius: 6px; margin-bottom: 4px; }
+      .admin-nav-list a.is-active, .admin-nav-list a:hover { background-color: var(--admin-sidebar-active-bg); }
+      .admin-main { flex: 1; padding: 40px; }
+      .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+      .admin-header h1 { font-size: 28px; font-weight: 700; margin: 0; }
+      .admin-card { background: #fff; border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+      .admin-card-header { padding: 20px; border-bottom: 1px solid var(--admin-border-color); }
+      .admin-card-title { font-size: 18px; font-weight: 600; margin: 0; }
+      .admin-card-body { padding: 20px; }
+      .form-group { margin-bottom: 16px; }
+      .form-group label { display: block; font-weight: 500; margin-bottom: 6px; font-size: 14px; }
+      .form-group input, .form-group textarea { width: 100%; padding: 8px 12px; border: 1px solid var(--admin-border-color); border-radius: 6px; }
+      .image-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 16px; }
+      .image-list-item { position: relative; }
+      .image-list-item img { width: 100%; height: auto; display: block; border-radius: 6px; }
+      .image-list-item .remove-btn { position: absolute; top: -5px; right: -5px; background: #ef4444; color: white; border: none; border-radius: 50%; width: 20px; height: 20px; font-size: 12px; cursor: pointer; }
+      #save-changes {
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.2s ease;
+      }
+      #save-changes.is-visible {
+        opacity: 1;
+        visibility: visible;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="admin-layout">
+      <aside class="admin-sidebar">
+        <a href="index.html" class="brand">Foireme</a>
+        <nav>
+          <ul class="admin-nav-list">
+            <li><a href="admin.html">Products</a></li>
+            <li><a href="promos.html" class="is-active">Promotions</a></li>
+            <li><a href="#">Orders</a></li>
+            <li><a href="#">Customers</a></li>
+          </ul>
+        </nav>
+      </aside>
+      <main class="admin-main">
+        <div class="admin-header">
+          <h1>Promotions</h1>
+          <button id="save-changes" class="btn btn--primary">Save Changes</button>
+        </div>
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h2 class="admin-card-title">Homepage Settings</h2>
+          </div>
+          <div class="admin-card-body">
+            <form id="homepage-form">
+              <div class="form-group">
+                <label for="page-title">Page Title</label>
+                <input type="text" id="page-title" />
+              </div>
+              <div class="form-group">
+                <label for="page-description">Page Description</label>
+                <textarea id="page-description" rows="3"></textarea>
+              </div>
+            </form>
+          </div>
+        </div>
+        <br>
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h2 class="admin-card-title">Homepage Hero</h2>
+          </div>
+          <div class="admin-card-body">
+            <form id="hero-form">
+              <div class="form-group">
+                <label for="hero-title">Title</label>
+                <input type="text" id="hero-title" />
+              </div>
+              <div class="form-group">
+                <label for="hero-subtitle">Subtitle</label>
+                <input type="text" id="hero-subtitle" />
+              </div>
+              <div class="form-group">
+                <label for="hero-background">Background</label>
+                <input type="text" id="hero-background" placeholder="e.g., linear-gradient(180deg, #fbf8f2 0%, #f6efe6 100%)" />
+              </div>
+              <div class="form-group">
+                <label>Images</label>
+                <div id="hero-images-list" class="image-list"></div>
+              </div>
+              <div class="form-group">
+                <label for="add-hero-image">Add Image</label>
+                <input type="file" id="add-hero-image" accept="image/*" />
+              </div>
+            </form>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="promos.js"></script>
+  </body>
+</html>

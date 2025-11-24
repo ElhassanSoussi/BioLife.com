@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin — Foireme</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=12" />
+    <style>
+      :root {
+        --admin-bg: #f6f6f7;
+        --admin-sidebar-bg: #1e293b;
+        --admin-sidebar-text: #f8fafc;
+        --admin-sidebar-active-bg: #334155;
+        --admin-border-color: #e5e7eb;
+        --admin-text-light: #6b7280;
+      }
+      body { background-color: var(--admin-bg); font-family: 'Inter', sans-serif; }
+      .admin-layout { display: flex; min-height: 100vh; }
+      .admin-sidebar { width: 240px; background-color: var(--admin-sidebar-bg); color: var(--admin-sidebar-text); padding: 20px; }
+      .admin-sidebar .brand { font-size: 24px; font-weight: 700; color: var(--admin-sidebar-text); text-decoration: none; display: block; margin-bottom: 40px; }
+      .admin-nav-list { list-style: none; padding: 0; margin: 0; }
+      .admin-nav-list a { display: block; padding: 12px 16px; text-decoration: none; color: var(--admin-sidebar-text); border-radius: 6px; margin-bottom: 4px; }
+      .admin-nav-list a.is-active, .admin-nav-list a:hover { background-color: var(--admin-sidebar-active-bg); }
+      .admin-main { flex: 1; padding: 40px; }
+      .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+      .admin-header h1 { font-size: 28px; font-weight: 700; margin: 0; }
+      .admin-card { background: #fff; border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+      .admin-card-body { padding: 20px; }
+      .product-table { width: 100%; border-collapse: collapse; }
+      .product-table th, .product-table td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--admin-border-color); }
+      .product-table th { font-weight: 600; color: var(--admin-text-light); font-size: 13px; }
+      .product-table td { font-size: 14px; }
+      .product-table .product-thumb { width: 40px; height: 40px; object-fit: cover; border-radius: 4px; margin-right: 12px; vertical-align: middle; }
+      .product-table .product-name { font-weight: 500; }
+      .product-actions button { margin-left: 8px; }
+      .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; z-index: 1000; }
+      .modal.is-open { display: flex; }
+      .modal-dialog { background: #fff; padding: 30px; border-radius: 8px; width: 90%; max-width: 500px; }
+      .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+      .modal-title { font-size: 20px; font-weight: 600; margin: 0; }
+      .form-group { margin-bottom: 16px; }
+      .form-group label { display: block; font-weight: 500; margin-bottom: 6px; font-size: 14px; }
+      .form-group input, .form-group textarea { width: 100%; padding: 8px 12px; border: 1px solid var(--admin-border-color); border-radius: 6px; }
+      .modal-footer { margin-top: 20px; text-align: right; }
+
+      #save-changes {
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.2s ease;
+      }
+      #save-changes.is-visible {
+        opacity: 1;
+        visibility: visible;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="admin-layout">
+      <aside class="admin-sidebar">
+        <a href="index.html" class="brand">Foireme</a>
+        <nav>
+          <ul class="admin-nav-list">
+            <li><a href="admin.html" class="is-active">Products</a></li>
+            <li><a href="promos.html">Promotions</a></li>
+            <li><a href="#">Orders</a></li>
+            <li><a href="#">Customers</a></li>
+          </ul>
+        </nav>
+      </aside>
+      <main class="admin-main">
+        <div class="admin-header">
+          <h1>Products</h1>
+          <div>
+            <button id="save-changes" class="btn btn--primary">Save Changes</button>
+            <button id="add-product" class="btn">Add Product</button>
+          </div>
+        </div>
+        <div class="admin-card">
+          <div class="admin-card-body">
+            <table class="product-table">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Price</th>
+                  <th>Category</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="product-list">
+                <!-- Products will be rendered here by admin.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Product Edit/Add Modal -->
+    <div id="product-modal" class="modal">
+      <div class="modal-dialog">
+        <header class="modal-header">
+          <h2 id="modal-title" class="modal-title">Add Product</h2>
+          <button class="modal__close" data-dismiss aria-label="Close">×</button>
+        </header>
+        <form id="product-form">
+          <input type="hidden" id="product-id" />
+          <div class="form-group">
+            <label for="product-name">Name</label>
+            <input type="text" id="product-name" required />
+          </div>
+          <div class="form-group">
+            <label for="product-price">Price</label>
+            <input type="number" id="product-price" step="0.01" required />
+          </div>
+          <div class="form-group">
+            <label for="product-image-file">Image</label>
+            <input type="file" id="product-image-file" accept="image/*" />
+            <input type="hidden" id="product-image" />
+            <img id="image-preview" src="" alt="Image preview" style="max-width: 100px; margin-top: 10px; display: none;" />
+          </div>
+          <div class="form-group">
+            <label for="product-category">Category</label>
+            <select id="product-category"></select>
+          </div>
+          <div class="form-group">
+            <label for="product-alt">Image Alt Text</label>
+            <textarea id="product-alt" rows="2"></textarea>
+          </div>
+          <footer class="modal-footer">
+            <button type="button" class="btn" data-dismiss>Cancel</button>
+            <button type="submit" class="btn btn--primary">Save Product</button>
+          </footer>
+        </form>
+      </div>
+    </div>
+
+    <script src="admin.js"></script>
+  </body>
+</html>

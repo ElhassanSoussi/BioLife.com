@@ -287,6 +287,48 @@ body {
   aspect-ratio: 1 / 1;
 }
 
+.product-stack img {
+  position: absolute;
+  object-fit: contain;
+  border-radius: var(--radius);
+  box-shadow: 0 16px 30px rgba(16,24,40,0.18);
+  background: #ffffff;
+  border: 1px solid var(--divider);
+  transition: transform .2s ease, box-shadow .2s ease;
+  max-width: 60%;
+  max-height: 60%;
+}
+
+.product-stack img:hover {
+  transform: translateY(-4px) rotate(-1deg);
+  box-shadow: 0 24px 40px rgba(16,24,40,0.22);
+  z-index: 10;
+}
+
+.product-stack img:nth-child(1) {
+  left: 5%;
+  bottom: 5%;
+  width: 55%;
+  transform: rotate(-4deg);
+  z-index: 1;
+}
+
+.product-stack img:nth-child(2) {
+  right: 5%;
+  top: 5%;
+  width: 45%;
+  transform: rotate(5deg);
+  z-index: 2;
+}
+
+.product-stack img:nth-child(3) {
+  bottom: 2%;
+  right: 20%;
+  width: 40%;
+  transform: rotate(-6deg);
+  z-index: 3;
+}
+
 .product{
   position: absolute;
   object-fit: contain;

@@ -3,9 +3,21 @@
   const getParam = (k) => new URLSearchParams(location.search).get(k);
   const pid = getParam('id');
 
+  const resolveImageUrl = (path) => {
+    if (!path) return '';
+    if (path.startsWith('http')) {
+      return path;
+    }
+    if (path.startsWith('/')) {
+      return `http://localhost:3000${path}`;
+    }
+    // For legacy paths that might not have a leading slash
+    return `http://localhost:3000/${path}`;
+  };
+
   async function loadAndRender() {
     try {
-      const res = await fetch('data/products.json', { cache: 'no-store' });
+      const res = await fetch('http://localhost:3000/api/products', { cache: 'no-store' });
       if (!res.ok) throw new Error('Failed to load products');
       allProducts = await res.json();
       
@@ -22,7 +34,7 @@
       const price = document.getElementById('prod-price');
       const reviews = document.getElementById('prod-reviews');
       const addBtn = document.getElementById('prod-add');
-      if (img) { img.src = prod.image; img.alt = prod.alt || prod.name; }
+      if (img) { img.src = resolveImageUrl(prod.image); img.alt = prod.alt || prod.name; }
       if (title) title.textContent = prod.name;
       if (price) price.textContent = `$${prod.price}`;
       if (reviews) { reviews.textContent = `(${prod.reviews})`; }
@@ -84,7 +96,7 @@
       track.innerHTML = recs.map(p => `
         <article class="card" aria-label="${p.name}">
           <a href="product.html?id=${p.id}" class="card__thumb">
-            <img src="${p.image}" alt="${p.alt || p.name}" width="600" height="600" loading="lazy" />
+            <img src="${resolveImageUrl(p.image)}" alt="${p.alt || p.name}" width="600" height="600" loading="lazy" />
           </a>
           <div class="card__body">
             <h3 class="card__title"><a href="product.html?id=${p.id}" class="card__link">${p.name}</a></h3>

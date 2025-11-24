@@ -41,12 +41,32 @@
 
   function applyHomepageHero(cfg){
     if (!cfg || !cfg.homepage_hero || !cfg.homepage_hero.enabled) return;
+    const hero = document.querySelector('.hero');
     const title = document.querySelector('.hero__title');
     const subtitle = document.querySelector('.hero__subtitle');
     const cta = document.querySelector('.hero .btn.btn--primary');
     if (title) title.textContent = cfg.homepage_hero.title || title.textContent;
     if (subtitle) subtitle.textContent = cfg.homepage_hero.subtitle || subtitle.textContent;
     if (cta && cfg.homepage_hero.cta){ cta.textContent = cfg.homepage_hero.cta.label || cta.textContent; cta.setAttribute('href', cfg.homepage_hero.cta.href || cta.getAttribute('href')); }
+
+    if (hero && cfg.homepage_hero.background) {
+      hero.style.background = cfg.homepage_hero.background;
+    }
+
+    const heroImagesContainer = document.querySelector('.product-stack');
+    if (heroImagesContainer && cfg.homepage_hero.images) {
+      heroImagesContainer.innerHTML = cfg.homepage_hero.images.map(img => `<img src="${resolveImageUrl(img.src)}" alt="Hero image" />`).join('');
+    }
+
+    if (cfg.page_title) {
+      document.title = cfg.page_title;
+    }
+    if (cfg.page_description) {
+      const metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc) {
+        metaDesc.setAttribute('content', cfg.page_description);
+      }
+    }
   }
 
   loadPromos().then(cfg => { renderGlobalPromo(cfg); applyHomepageHero(cfg); });
@@ -55,7 +75,7 @@
 
   async function loadProducts() {
     try {
-      const res = await fetch('data/products.json', { cache: 'no-store' });
+      const res = await fetch('http://localhost:3000/api/products', { cache: 'no-store' });
       if (!res.ok) throw new Error('Failed to load products');
       allProducts = await res.json();
       render(allProducts);
@@ -80,6 +100,17 @@
     return String(n);
   };
 
+  const resolveImageUrl = (path) => {
+    if (!path) return '';
+    if (path.startsWith('http')) {
+      return path;
+    }
+    if (path.startsWith('/')) {
+      return `http://localhost:3000${path}`;
+    }
+    return `http://localhost:3000/${path}`;
+  };
+
   function render(products) {
     const grid = document.querySelector('.product-grid');
     if (!grid) return;
@@ -100,7 +131,7 @@
           <article class="card" data-id="${pid}" aria-labelledby="${pid}-title">
             <div class="card__media">
               <a href="product.html?id=${pid}" class="card__thumb" aria-label="${p.name}">
-                <img src="${p.image}" alt="${p.alt || p.name}" width="600" height="600" loading="lazy" />
+                <img src="${resolveImageUrl(p.image)}" alt="${p.alt || p.name}" width="600" height="600" loading="lazy" />
               </a>
               ${badges ? `<div class="badges">${badges}</div>` : ''}
               <div class="quickadd">
@@ -217,7 +248,7 @@
       const line = (i.qty * (p.price || 0)).toFixed(2);
       const optText = i.options ? [i.options.shade && `Shade: ${i.options.shade}`, i.options.size && `Size: ${i.options.size}`].filter(Boolean).join(' • ') : '';
       return `<li class="mini-cart__item" data-id="${i.id}">
-        <img src="${p.image}" alt="${p.name}" class="mini-cart__img"/>
+        <img src="${resolveImageUrl(p.image)}" alt="${p.name}" class="mini-cart__img"/>
         <div>
           <p class="mini-cart__name">${p.name}</p>
           ${optText ? `<p class="mini-cart__price" style="margin:0 0 4px">${optText}</p>` : ''}
@@ -373,7 +404,7 @@
     const content = el.querySelector('.modal__content');
     content.innerHTML = `
       <div class="qv">
-        <img src="${p.image}" alt="${p.alt || p.name}" width="320" height="320" class="qv__img" />
+        <img src="${resolveImageUrl(p.image)}" alt="${p.alt || p.name}" width="320" height="320" class="qv__img" />
         <div class="qv__info">
           <h3 id="qv-title">${p.name}</h3>
           <div class="rating"><span class="stars" style="--rating:${p.rating}">★★★★★</span><span class="rating__count">(${p.reviews})</span></div>
