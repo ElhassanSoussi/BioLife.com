@@ -5,25 +5,43 @@
 
   const resolveImageUrl = (path) => {
     if (!path) return '';
-    if (path.startsWith('http')) {
+    if (/^https?:\/\//i.test(path)) {
       return path;
     }
-    if (path.startsWith('/')) {
-      return `http://localhost:3000${path}`;
+    const cleanPath = path.startsWith('/') ? path.slice(1) : path;
+    try {
+      return new URL(cleanPath, window.location.href).toString();
+    } catch {
+      return cleanPath;
     }
-    // For legacy paths that might not have a leading slash
-    return `http://localhost:3000/${path}`;
   };
 
+  async function fetchProducts() {
+    const sources = ['/api/products', 'data/products.json'];
+    for (const src of sources) {
+      try {
+        const res = await fetch(src, { cache: 'no-store' });
+        if (!res.ok) throw new Error(`Failed to load products from ${src}`);
+        return await res.json();
+      } catch (err) {
+        console.warn(`Products failed to load from ${src}`, err);
+      }
+    }
+    return [];
+  }
+
   async function loadAndRender() {
+    const main = document.getElementById('main');
     try {
-      const res = await fetch('http://localhost:3000/api/products', { cache: 'no-store' });
-      if (!res.ok) throw new Error('Failed to load products');
-      allProducts = await res.json();
-      
+      allProducts = await fetchProducts();
+      if (!allProducts.length) {
+        if (main) main.innerHTML = '<div class="container"><p>Products are unavailable right now. Please try again shortly.</p></div>';
+        return;
+      }
+
       const prod = allProducts.find(p => p.id === pid) || allProducts[0];
       if (!prod) {
-        document.getElementById('main').innerHTML = '<div class="container"><p>Product not found.</p></div>';
+        if (main) main.innerHTML = '<div class="container"><p>Product not found.</p></div>';
         return;
       }
 
@@ -57,7 +75,7 @@
 
     } catch (err) {
       console.error('Failed to load product page', err);
-      document.getElementById('main').innerHTML = '<div class="container"><p>There was an error loading this page.</p></div>';
+      if (main) main.innerHTML = '<div class="container"><p>There was an error loading this page.</p></div>';
     }
   }
 

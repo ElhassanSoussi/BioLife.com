@@ -1,15 +1,10 @@
 (() => {
   let promos = {};
-  const heroForm = document.getElementById('hero-form');
-  const heroTitleInput = document.getElementById('hero-title');
-  const heroSubtitleInput = document.getElementById('hero-subtitle');
+  const backgroundForm = document.getElementById('background-form');
   const heroBackgroundInput = document.getElementById('hero-background');
-  const heroImagesList = document.getElementById('hero-images-list');
-  const addHeroImageInput = document.getElementById('add-hero-image');
+  const heroBackgroundImageInput = document.getElementById('hero-background-image');
+  const heroBackgroundImagePreview = document.getElementById('hero-background-image-preview');
   const saveChangesBtn = document.getElementById('save-changes');
-
-  const pageTitleInput = document.getElementById('page-title');
-  const pageDescriptionInput = document.getElementById('page-description');
 
   const resolveImageUrl = (path) => {
     if (!path) return '';
@@ -33,25 +28,21 @@
 
   function renderForms() {
     const heroConfig = promos.homepage_hero || {};
-    heroTitleInput.value = heroConfig.title || '';
-    heroSubtitleInput.value = heroConfig.subtitle || '';
     heroBackgroundInput.value = heroConfig.background || '';
 
-    if (heroConfig.images && heroImagesList) {
-      heroImagesList.innerHTML = heroConfig.images.map((img, index) => `
-        <div class="image-list-item" data-index="${index}">
-          <img src="${resolveImageUrl(img.src)}" alt="Hero image ${index + 1}">
-          <button class="remove-btn" data-index="${index}">×</button>
+    if (heroConfig.background_image_url) {
+      heroBackgroundImagePreview.innerHTML = `
+        <div class="image-list-item">
+          <img src="${resolveImageUrl(heroConfig.background_image_url)}" alt="Hero background image">
         </div>
-      `).join('');
+      `;
+    } else {
+      heroBackgroundImagePreview.innerHTML = '';
     }
-
-    pageTitleInput.value = promos.page_title || '';
-    pageDescriptionInput.value = promos.page_description || '';
   }
 
-  async function addHeroImage() {
-    const file = addHeroImageInput.files[0];
+  async function addHeroBackgroundImage() {
+    const file = heroBackgroundImageInput.files[0];
     if (!file) return;
 
     const formData = new FormData();
@@ -69,10 +60,8 @@
       if (!promos.homepage_hero) {
         promos.homepage_hero = {};
       }
-      if (!promos.homepage_hero.images) {
-        promos.homepage_hero.images = [];
-      }
-      promos.homepage_hero.images.push({ src: data.imageUrl });
+      promos.homepage_hero.background_image_url = data.imageUrl;
+      promos.homepage_hero.background = ''; // Clear background color when image is set
       renderForms();
       showSaveButton();
     } catch (err) {
@@ -81,26 +70,14 @@
     }
   }
 
-  function removeHeroImage(index) {
-    if (promos.homepage_hero && promos.homepage_hero.images) {
-      promos.homepage_hero.images.splice(index, 1);
-      renderForms();
-      showSaveButton();
-    }
-  }
-
   async function saveChanges() {
     if (!promos.homepage_hero) {
       promos.homepage_hero = {};
     }
-    promos.homepage_hero.title = heroTitleInput.value;
-    promos.homepage_hero.subtitle = heroSubtitleInput.value;
     promos.homepage_hero.background = heroBackgroundInput.value;
-    if (!promos.homepage_hero.images) {
-      promos.homepage_hero.images = [];
+    if (heroBackgroundInput.value) {
+      promos.homepage_hero.background_image_url = ''; // Clear background image if color is set
     }
-    promos.page_title = pageTitleInput.value;
-    promos.page_description = pageDescriptionInput.value;
 
     try {
       const res = await fetch('http://localhost:3000/api/promos', {
@@ -127,18 +104,9 @@
 
   function init() {
     loadPromos();
-    heroForm.addEventListener('input', showSaveButton);
-    addHeroImageInput.addEventListener('change', addHeroImage);
-    heroImagesList.addEventListener('click', (e) => {
-      if (e.target.classList.contains('remove-btn')) {
-        const index = parseInt(e.target.dataset.index, 10);
-        removeHeroImage(index);
-      }
-    });
+    backgroundForm.addEventListener('input', showSaveButton);
+    heroBackgroundImageInput.addEventListener('change', addHeroBackgroundImage);
     saveChangesBtn.addEventListener('click', saveChanges);
-    pageTitleInput.addEventListener('input', showSaveButton);
-    pageDescriptionInput.addEventListener('input', showSaveButton);
-    heroBackgroundInput.addEventListener('input', showSaveButton);
   }
 
   init();

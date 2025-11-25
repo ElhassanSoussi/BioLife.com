@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
             postElement.href = `post.html?slug=${post.slug}`;
             postElement.classList.add('post-card');
             postElement.innerHTML = `
-              <img src="${post.image}" alt="" class="post-card__image">
+              <img src="${post.image}" alt="${post.title}" class="post-card__image">
               <div class="post-card__content">
                 <h2 class="post-card__title">${post.title}</h2>
                 <p class="post-card__excerpt">${post.excerpt}</p>

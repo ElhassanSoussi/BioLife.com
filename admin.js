@@ -9,22 +9,25 @@
   const imagePreview = document.getElementById('image-preview');
   const imageFileInput = document.getElementById('product-image-file');
   const categorySelect = document.getElementById('product-category');
+  const deleteConfirmModal = document.getElementById('delete-confirm-modal');
+  const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
+  let productToDeleteId = null;
 
   const resolveImageUrl = (path) => {
     if (!path) return '';
-    if (path.startsWith('http')) {
-      return path;
+    if (/^https?:\/\//i.test(path)) return path;
+    const cleanPath = path.startsWith('/') ? path.slice(1) : path;
+    try {
+      return new URL(cleanPath, window.location.href).toString();
+    } catch {
+      return cleanPath;
     }
-    if (path.startsWith('/')) {
-      return `http://localhost:3000${path}`;
-    }
-    return `http://localhost:3000/${path}`;
   };
 
   // Fetch initial data
   async function loadProducts() {
     try {
-      const res = await fetch('http://localhost:3000/api/products', { cache: 'no-store' });
+      const res = await fetch('/api/products', { cache: 'no-store' });
       if (!res.ok) throw new Error('Failed to load products');
       products = await res.json();
       renderProducts();
@@ -56,6 +59,8 @@
   // Modal controls
   const openModal = () => modal.classList.add('is-open');
   const closeModal = () => modal.classList.remove('is-open');
+  const openDeleteConfirmModal = () => deleteConfirmModal.classList.add('is-open');
+  const closeDeleteConfirmModal = () => deleteConfirmModal.classList.remove('is-open');
 
   function populateCategoryDropdown() {
     if (categorySelect.tagName !== 'SELECT') return;
@@ -117,6 +122,22 @@
     }
   });
 
+  deleteConfirmModal.addEventListener('click', (e) => {
+    if (e.target.matches('[data-dismiss]') || e.target.closest('[data-dismiss]')) {
+      closeDeleteConfirmModal();
+    }
+  });
+
+  confirmDeleteBtn.addEventListener('click', () => {
+    if (productToDeleteId) {
+      products = products.filter(p => p.id !== productToDeleteId);
+      renderProducts();
+      showSaveButton();
+    }
+    closeDeleteConfirmModal();
+    productToDeleteId = null;
+  });
+
   categorySelect.addEventListener('change', () => {
     if (categorySelect.value === '__new__') {
       const newCategory = prompt('Enter new category name:');
@@ -145,7 +166,7 @@
     formData.append('image', file);
 
     try {
-      const res = await fetch('http://localhost:3000/api/upload', {
+      const res = await fetch('/api/upload', {
         method: 'POST',
         body: formData
       });
@@ -199,26 +220,24 @@
   productListEl.addEventListener('click', (e) => {
     const row = e.target.closest('tr');
     if (!row) return;
+
     const id = row.dataset.id;
+    const product = products.find(p => p.id === id);
 
     if (e.target.matches('.js-edit')) {
-      const product = products.find(p => p.id === id);
       if (product) showEditModal(product);
     }
 
     if (e.target.matches('.js-delete')) {
-      if (confirm('Are you sure you want to delete this product?')) {
-        products = products.filter(p => p.id !== id);
-        renderProducts();
-        showSaveButton();
-      }
+      productToDeleteId = id;
+      openDeleteConfirmModal();
     }
   });
 
   // Save changes to server
   async function saveChanges() {
     try {
-      const res = await fetch('http://localhost:3000/api/products', {
+      const res = await fetch('/api/products', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(products, null, 2)

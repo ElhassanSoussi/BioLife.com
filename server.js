@@ -89,6 +89,38 @@ app.post('/api/upload', upload.single('image'), (req, res) => {
     res.json({ imageUrl: `/uploads/${req.file.filename}` });
 });
 
+// Mock customer and order data
+const mockCustomers = [
+    { id: 1, name: 'John Doe', cardNumber: '**** **** **** 1234', email: 'john.doe@example.com', phone: '123-456-7890', address: '123 Main St, Anytown, USA', location: 'Anytown, USA', zipCode: '12345', totalItems: 2, totalSpent: 50.00, purchaseHistory: [{ name: 'Serum', quantity: 1 }, { name: 'Foundation', quantity: 1 }] },
+    { id: 2, name: 'Jane Smith', cardNumber: '**** **** **** 5678', email: 'jane.smith@example.com', phone: '987-654-3210', address: '456 Oak Ave, Othertown, USA', location: 'Othertown, USA', zipCode: '67890', totalItems: 2, totalSpent: 30.00, purchaseHistory: [{ name: 'Brush', quantity: 2 }] }
+];
+
+const mockOrders = [
+    { id: 1, customer: mockCustomers[0], items: [{ name: 'Serum', quantity: 1 }, { name: 'Foundation', quantity: 1 }], status: 'shipment awaiting', date: '2025-11-23T10:00:00Z', total: 50.00 },
+    { id: 2, customer: mockCustomers[1], items: [{ name: 'Brush', quantity: 2 }], status: 'shipped', date: '2025-11-22T14:30:00Z', total: 30.00 },
+    { id: 3, customer: mockCustomers[0], items: [{ name: 'Brush', quantity: 1 }], status: 'shipment awaiting', date: '2025-11-24T11:00:00Z', total: 15.00 }
+];
+
+app.get('/api/customers', (req, res) => {
+    res.json(mockCustomers);
+});
+
+app.get('/api/orders', (req, res) => {
+    res.json(mockOrders);
+});
+
+app.post('/api/orders/:id/status', (req, res) => {
+    const orderId = parseInt(req.params.id);
+    const { status } = req.body;
+    const order = mockOrders.find(o => o.id === orderId);
+    if (order) {
+        order.status = status;
+        res.json({ success: true });
+    } else {
+        res.status(404).json({ error: 'Order not found' });
+    }
+});
+
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });

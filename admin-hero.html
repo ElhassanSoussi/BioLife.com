@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hero Settings — Foireme</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin.css?v=12" />
+  </head>
+  <body>
+
+    <div class="admin-layout">
+      <aside class="admin-sidebar">
+        <a href="index.html" class="brand">Foireme</a>
+        <nav>
+          <ul class="admin-nav-list">
+            <li><a href="admin.html">Products</a></li>
+            <li class="has-submenu">
+              <a href="#" class="submenu-toggle">Homepage</a>
+              <ul class="submenu">
+                <li><a href="admin-hero.html" class="is-active">Hero</a></li>
+                <li><a href="admin-background.html">Background</a></li>
+              </ul>
+            </li>
+            <li><a href="orders.html">Orders</a></li>
+            <li><a href="customers.html">Customers</a></li>
+          </ul>
+        </nav>
+      </aside>
+      <main class="admin-main">
+        <div class="admin-header">
+          <h1>Homepage Hero</h1>
+          <button id="save-changes" class="btn btn--primary">Save Changes</button>
+        </div>
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h2 class="admin-card-title">Homepage Settings</h2>
+          </div>
+          <div class="admin-card-body">
+            <form id="homepage-form">
+              <div class="form-group">
+                <label for="page-title">Page Title</label>
+                <input type="text" id="page-title" />
+              </div>
+              <div class="form-group">
+                <label for="page-description">Page Description</label>
+                <textarea id="page-description" rows="3"></textarea>
+              </div>
+            </form>
+          </div>
+        </div>
+        <br>
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h2 class="admin-card-title">Homepage Hero</h2>
+          </div>
+          <div class="admin-card-body">
+            <form id="hero-form">
+              <div class="form-group">
+                <label for="hero-title">Title</label>
+                <input type="text" id="hero-title" />
+              </div>
+              <div class="form-group">
+                <label for="hero-subtitle">Subtitle</label>
+                <input type="text" id="hero-subtitle" />
+              </div>
+              <div class="form-group">
+                <label>Images</label>
+                <div id="hero-images-list" class="image-list"></div>
+              </div>
+              <div class="form-group">
+                <label for="add-hero-image">Add Image</label>
+                <input type="file" id="add-hero-image" accept="image/*" />
+              </div>
+            </form>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="admin-hero.js"></script>
+  </body>
+</html>

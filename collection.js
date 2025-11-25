@@ -112,6 +112,7 @@
       return 'badge';
     };
     const badges = (p.tags || []).map(t => `<span class="${badgeClass(t)}">${t}</span>`).join('');
+    const desc = (p.description && p.description.trim()) || (p.category ? `${p.category} essential for your routine.` : 'A Foireme favorite for every day.');
 
     return `
       <article class="card" data-id="${p.id}" aria-labelledby="${p.id}-title">
@@ -123,14 +124,15 @@
         </div>
         <div class="card__body">
           <h3 id="${p.id}-title" class="card__title"><a href="product.html?id=${p.id}" class="card__link">${p.name}</a></h3>
+          <p class="card__desc">${desc}</p>
           <div class="rating" aria-label="Rated ${p.rating} out of 5">
             <span class="stars" style="--rating:${p.rating}" aria-hidden="true"></span>
             <span class="rating__count">(${p.reviews})</span>
           </div>
           <div class="card__meta"><span class="price">$${p.price}</span></div>
-          <div class="quickadd" style="position: static; transform: none; opacity: 1; margin-top: 10px;">
-            <button class="btn btn--primary btn--sm js-add" data-id="${p.id}" type="button">Add to Cart</button>
-            <a class="btn btn--sm" style="background:#fff;border:1px solid var(--divider);color:var(--ink)" href="product.html?id=${p.id}">View</a>
+          <div class="card__actions">
+            <a class="btn btn--sm card__btn card__btn--buy" href="product.html?id=${p.id}">Buy</a>
+            <button class="btn btn--sm btn--primary card__btn js-add" data-id="${p.id}" type="button">Cart</button>
           </div>
         </div>
       </article>`;

@@ -49,8 +49,14 @@
     if (subtitle) subtitle.textContent = cfg.homepage_hero.subtitle || subtitle.textContent;
     if (cta && cfg.homepage_hero.cta){ cta.textContent = cfg.homepage_hero.cta.label || cta.textContent; cta.setAttribute('href', cfg.homepage_hero.cta.href || cta.getAttribute('href')); }
 
-    if (hero && cfg.homepage_hero.background) {
-      hero.style.background = cfg.homepage_hero.background;
+    if (hero) {
+      if (cfg.homepage_hero.background_image_url) {
+        hero.style.backgroundImage = `url(${resolveImageUrl(cfg.homepage_hero.background_image_url)})`;
+        hero.style.backgroundSize = 'cover';
+        hero.style.backgroundPosition = 'center';
+      } else if (cfg.homepage_hero.background) {
+        hero.style.background = cfg.homepage_hero.background;
+      }
     }
 
     const heroImagesContainer = document.querySelector('.product-stack');
@@ -74,16 +80,23 @@
   let allProducts = [];
 
   async function loadProducts() {
-    try {
-      const res = await fetch('http://localhost:3000/api/products', { cache: 'no-store' });
-      if (!res.ok) throw new Error('Failed to load products');
-      allProducts = await res.json();
-      render(allProducts);
-      // Re-initialize cart-dependent features that need allProducts
-      reinit();
-    } catch (err) {
-      console.warn('Products failed to load; using empty array', err);
+    const sources = ['/api/products', 'data/products.json'];
+    for (const src of sources) {
+      try {
+        const res = await fetch(src, { cache: 'no-store' });
+        if (!res.ok) throw new Error(`Failed to load products from ${src}`);
+        allProducts = await res.json();
+        render(allProducts);
+        // Re-initialize cart-dependent features that need allProducts
+        reinit();
+        return;
+      } catch (err) {
+        console.warn(`Products failed to load from ${src}`, err);
+      }
     }
+    allProducts = [];
+    render(allProducts);
+    reinit();
   }
 
   const badgeClass = (tag) => {
@@ -102,13 +115,13 @@
 
   const resolveImageUrl = (path) => {
     if (!path) return '';
-    if (path.startsWith('http')) {
-      return path;
+    if (/^https?:\/\//i.test(path)) return path;
+    const cleanPath = path.startsWith('/') ? path.slice(1) : path;
+    try {
+      return new URL(cleanPath, window.location.href).toString();
+    } catch {
+      return cleanPath;
     }
-    if (path.startsWith('/')) {
-      return `http://localhost:3000${path}`;
-    }
-    return `http://localhost:3000/${path}`;
   };
 
   function render(products) {
@@ -117,6 +130,7 @@
     grid.innerHTML = products
       .map((p, i) => {
         const pid = p.id || `p${i + 1}`;
+        const desc = (p.description && p.description.trim()) || (p.category ? `${p.category} essential for your routine.` : 'A Foireme favorite for every day.');
         const badges = (p.tags || [])
           .map((t) => `<span class="${badgeClass(t)}">${t}</span>`) 
           .join('');
@@ -140,12 +154,16 @@
             </div>
             <div class="card__body">
               <h3 id="${pid}-title" class="card__title"><a href="product.html?id=${pid}" class="card__link">${p.name}</a></h3>
-              <p class="card__desc">${p.description || ''}</p>
+              <p class="card__desc">${desc}</p>
               <div class="rating" aria-label="Rated ${p.rating} out of 5">
                 <span class="stars" style="--rating:${p.rating}" aria-hidden="true"></span>
                 <span class="rating__count">(${formatCount(p.reviews)})</span>
               </div>
               <div class="card__meta">${meta}</div>
+              <div class="card__actions">
+                <a class="btn btn--sm card__btn card__btn--buy" href="product.html?id=${pid}">Buy</a>
+                <button class="btn btn--sm btn--primary card__btn js-add" data-id="${pid}" type="button">Cart</button>
+              </div>
               ${swatches ? `<div class="swatches" role="list" aria-label="Available options">${swatches}</div>` : ''}
             </div>
           </article>
