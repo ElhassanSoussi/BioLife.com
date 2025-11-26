@@ -79,13 +79,21 @@
 
   let allProducts = [];
 
+  const normalizeProducts = (list) => {
+    return (Array.isArray(list) ? list : []).map((p, idx) => {
+      if (p && p.id) return p;
+      const fallbackId = `p${idx + 1}`;
+      return { ...p, id: fallbackId };
+    });
+  };
+
   async function loadProducts() {
     const sources = ['/api/products', 'data/products.json'];
     for (const src of sources) {
       try {
         const res = await fetch(src, { cache: 'no-store' });
         if (!res.ok) throw new Error(`Failed to load products from ${src}`);
-        allProducts = await res.json();
+        allProducts = normalizeProducts(await res.json());
         render(allProducts);
         // Re-initialize cart-dependent features that need allProducts
         reinit();
@@ -149,7 +157,7 @@
               </a>
               ${badges ? `<div class="badges">${badges}</div>` : ''}
               <div class="quickadd">
-                <button class="btn btn--primary btn--sm js-add" data-id="${pid}" type="button" aria-label="Quick add ${p.name}">Quick Add</button>
+                <button class="btn btn--primary btn--sm js-add" data-id="${pid}" type="button" aria-label="Add ${p.name} to cart">Add to Cart</button>
               </div>
             </div>
             <div class="card__body">
@@ -162,7 +170,7 @@
               <div class="card__meta">${meta}</div>
               <div class="card__actions">
                 <a class="btn btn--sm card__btn card__btn--buy" href="product.html?id=${pid}">Buy</a>
-                <button class="btn btn--sm btn--primary card__btn js-add" data-id="${pid}" type="button">Cart</button>
+                <button class="btn btn--sm btn--primary card__btn js-add" data-id="${pid}" type="button">Add to Cart</button>
               </div>
               ${swatches ? `<div class="swatches" role="list" aria-label="Available options">${swatches}</div>` : ''}
             </div>
