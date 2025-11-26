@@ -1,16 +1,27 @@
 (() => {
   let allProducts = [];
 
+  const resolveImageUrl = (path) => {
+    if (!path) return '';
+    if (/^https?:\/\//i.test(path)) return path;
+    const cleanPath = path.startsWith('/') ? path.slice(1) : path;
+    try { return new URL(cleanPath, window.location.href).toString(); } catch { return cleanPath; }
+  };
+
   async function loadProducts() {
-    try {
-      const res = await fetch('data/products.json', { cache: 'no-store' });
-      if (!res.ok) throw new Error('Failed to load products');
-      allProducts = await res.json();
-      return allProducts;
-    } catch (err) {
-      console.warn('Products failed to load; using empty array', err);
-      return [];
+    const sources = ['/api/products', 'data/products.json'];
+    for (const src of sources) {
+      try {
+        const res = await fetch(src, { cache: 'no-store' });
+        if (!res.ok) throw new Error(`Failed to load products from ${src}`);
+        allProducts = await res.json();
+        return allProducts;
+      } catch (err) {
+        console.warn(`Products failed to load from ${src}`, err);
+      }
     }
+    allProducts = [];
+    return allProducts;
   }
 
   const qs = new URLSearchParams(location.search);
@@ -56,6 +67,9 @@
   const skinChecks = Array.from(document.querySelectorAll('input[name="skin"]'));
   const priceMin = document.getElementById('price-min');
   const priceMax = document.getElementById('price-max');
+
+  // If core controls are missing, avoid running the rest of the script
+  if (!grid || !sortSel || !loadMoreBtn || !priceMin || !priceMax) return;
 
   // Pre-check selected category
   if (cat) {
@@ -118,7 +132,7 @@
       <article class="card" data-id="${p.id}" aria-labelledby="${p.id}-title">
         <div class="card__media">
           <a href="product.html?id=${p.id}" class="card__thumb" aria-label="${p.name}">
-            <img src="${p.image}" alt="${p.alt || p.name}" width="600" height="600" loading="lazy" />
+            <img src="${resolveImageUrl(p.image)}" alt="${p.alt || p.name}" width="600" height="600" loading="lazy" />
           </a>
           ${badges ? `<div class="badges">${badges}</div>` : ''}
         </div>
@@ -141,6 +155,11 @@
   function render(reset){
     if (!grid) return;
     if (reset){ grid.innerHTML=''; rendered=0; }
+    if (!working.length){
+      grid.innerHTML = '<p style="color:var(--muted)">No products match these filters.</p>';
+      loadMoreBtn.style.display = 'none';
+      return;
+    }
     const slice = working.slice(rendered, rendered+PAGE);
     grid.insertAdjacentHTML('beforeend', slice.map(card).join(''));
     rendered += slice.length;

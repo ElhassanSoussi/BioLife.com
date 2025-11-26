@@ -3,6 +3,7 @@
   const get = () => { try { return JSON.parse(localStorage.getItem(KEY)||'[]')||[]; } catch { return []; } };
   const set = (v) => localStorage.setItem(KEY, JSON.stringify(v));
   const wl = document.getElementById('wl');
+  if (!wl) return;
   const data = get();
   if (!data.length){ wl.innerHTML = '<p style="color:var(--muted)">Your wishlist is empty.</p>'; return; }
   wl.innerHTML = data.map(p => `
@@ -25,4 +26,3 @@
     }
   });
 })();
-

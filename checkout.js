@@ -6,13 +6,27 @@
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => Array.from(document.querySelectorAll(sel));
 
-  // Step controls
   const steps = $$('.stepper .step');
+  const stepShipping = $('#step-shipping');
+  const stepPayment = $('#step-payment');
+  const stepReview = $('#step-review');
+
+  const subEl = $('#summary-subtotal');
+  const discEl = $('#summary-discount');
+  const shipEl = $('#summary-shipping');
+  const totEl = $('#summary-total');
+  const itemsEl = $('#summary-items');
+
+  // Abort setup if the checkout layout is missing to avoid runtime errors elsewhere
+  const required = [steps.length, stepShipping, stepPayment, stepReview, subEl, discEl, shipEl, totEl, itemsEl];
+  if (required.some(r => !r)) return;
+
+  // Step controls
   const showStep = (n) => {
     steps.forEach((s,i)=> s.classList.toggle('is-active', i<=n));
-    $('#step-shipping').hidden = n!==0; $('#step-shipping').classList.toggle('is-active', n===0);
-    $('#step-payment').hidden = n!==1; $('#step-payment').classList.toggle('is-active', n===1);
-    $('#step-review').hidden = n!==2; $('#step-review').classList.toggle('is-active', n===2);
+    stepShipping.hidden = n!==0; stepShipping.classList.toggle('is-active', n===0);
+    stepPayment.hidden = n!==1; stepPayment.classList.toggle('is-active', n===1);
+    stepReview.hidden = n!==2; stepReview.classList.toggle('is-active', n===2);
   };
   showStep(0);
 
@@ -23,11 +37,6 @@
 
   // Summary rendering
   const fmt = (n) => `$${Number(n).toFixed(2)}`;
-  const subEl = $('#summary-subtotal');
-  const discEl = $('#summary-discount');
-  const shipEl = $('#summary-shipping');
-  const totEl = $('#summary-total');
-  const itemsEl = $('#summary-items');
   const PROMOS = { FOIREME10: { type:'percent', value:10, msg:'10% off applied' }, FREESHIP: { type:'ship', value:0, msg:'Free shipping applied' } };
   let discount = 0; let shipping = 5.00; let promoApplied = null;
 
@@ -52,16 +61,23 @@
   // Promo code
   const promoInput = $('#promo');
   const promoMsg = $('#promo-msg');
-  $('#apply-promo').addEventListener('click', ()=>{
-    const code = (promoInput.value||'').trim().toUpperCase();
-    if (!PROMOS[code]){ promoApplied = null; promoMsg.textContent = 'Invalid code'; promoMsg.style.color = '#cc3b3b'; calc(); return; }
-    promoApplied = code; promoMsg.textContent = PROMOS[code].msg; promoMsg.style.color = '#137333'; calc();
-  });
+  const applyPromoBtn = $('#apply-promo');
+  if (promoInput && promoMsg && applyPromoBtn){
+    applyPromoBtn.addEventListener('click', ()=>{
+      const code = (promoInput.value||'').trim().toUpperCase();
+      if (!PROMOS[code]){ promoApplied = null; promoMsg.textContent = 'Invalid code'; promoMsg.style.color = '#cc3b3b'; calc(); return; }
+      promoApplied = code; promoMsg.textContent = PROMOS[code].msg; promoMsg.style.color = '#137333'; calc();
+    });
+  }
 
   // Step transitions
-  $('#to-payment').addEventListener('click', ()=> showStep(1));
-  $('#back-to-shipping').addEventListener('click', ()=> showStep(0));
-  $('#to-review').addEventListener('click', ()=>{
+  const toPaymentBtn = $('#to-payment');
+  const backToShippingBtn = $('#back-to-shipping');
+  const toReviewBtn = $('#to-review');
+  const backToPaymentBtn = $('#back-to-payment');
+  toPaymentBtn && toPaymentBtn.addEventListener('click', ()=> showStep(1));
+  backToShippingBtn && backToShippingBtn.addEventListener('click', ()=> showStep(0));
+  toReviewBtn && toReviewBtn.addEventListener('click', ()=>{
     // Populate review sections
     const ship = {
       name: `${$('#ship-first').value || ''} ${$('#ship-last').value || ''}`.trim(),
@@ -76,10 +92,11 @@
     $('#review-payment').innerHTML = `<h3>Payment</h3><p>Card ending in ${($('#pay-card').value||'').slice(-4)} · Exp ${$('#pay-exp').value}</p>`;
     showStep(2);
   });
-  $('#back-to-payment').addEventListener('click', ()=> showStep(1));
+  backToPaymentBtn && backToPaymentBtn.addEventListener('click', ()=> showStep(1));
 
   // Place order (demo)
-  $('#place-order').addEventListener('click', ()=>{
+  const placeOrderBtn = $('#place-order');
+  placeOrderBtn && placeOrderBtn.addEventListener('click', ()=>{
     const subtotal = items.reduce((s,i)=> s + (i.price||0) * i.qty, 0);
     const countKey = 'foireme_cart_count';
     // compute totals similar to summary

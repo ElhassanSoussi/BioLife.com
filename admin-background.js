@@ -1,5 +1,10 @@
 (() => {
   let promos = {};
+  const apiUrl = (path) => {
+    if (!path) return '';
+    if (path.startsWith('http')) return path;
+    return `${window.location.origin}${path.startsWith('/') ? path : `/${path}`}`;
+  };
   const backgroundForm = document.getElementById('background-form');
   const heroBackgroundInput = document.getElementById('hero-background');
   const heroBackgroundImageInput = document.getElementById('hero-background-image');
@@ -11,12 +16,16 @@
     if (path.startsWith('http') || path.startsWith('/')) {
       return path;
     }
-    return `http://localhost:3000/${path}`;
+    return apiUrl(path);
   };
+
+  // Ensure the expected controls exist before wiring up events
+  const required = [backgroundForm, heroBackgroundInput, heroBackgroundImageInput, heroBackgroundImagePreview, saveChangesBtn];
+  if (required.some(el => !el)) return;
 
   async function loadPromos() {
     try {
-      const res = await fetch('http://localhost:3000/api/promos', { cache: 'no-store' });
+      const res = await fetch(apiUrl('/api/promos'), { cache: 'no-store' });
       if (!res.ok) throw new Error('Failed to load promotions');
       promos = await res.json();
       renderForms();
@@ -49,7 +58,7 @@
     formData.append('image', file);
 
     try {
-      const res = await fetch('http://localhost:3000/api/upload', {
+      const res = await fetch(apiUrl('/api/upload'), {
         method: 'POST',
         body: formData
       });
@@ -80,7 +89,7 @@
     }
 
     try {
-      const res = await fetch('http://localhost:3000/api/promos', {
+      const res = await fetch(apiUrl('/api/promos'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(promos, null, 2)

@@ -10,6 +10,9 @@
   const signup = document.getElementById('signup');
   const signout = document.getElementById('signout');
 
+  // Exit silently if the expected form elements are not present
+  if (!msg || !links || !signin || !signup || !signout) return;
+
   function render(){
     const u = getUser();
     if (u){
@@ -42,4 +45,3 @@
   });
   signout.addEventListener('click', ()=>{ clearUser(); render(); });
 })();
-
