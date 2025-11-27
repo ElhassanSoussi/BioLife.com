@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ElhassanSoussi/foireme.git"
+    "url": "git+https://github.com/ElhassanSoussi/BioLife.com.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ElhassanSoussi/foireme/issues"
+    "url": "https://github.com/ElhassanSoussi/BioLife.com/issues"
   },
-  "homepage": "https://github.com/ElhassanSoussi/foireme#readme",
+  "homepage": "https://github.com/ElhassanSoussi/BioLife.com#readme",
   "dependencies": {
     "body-parser": "^2.2.0",
     "cors": "^2.8.5",

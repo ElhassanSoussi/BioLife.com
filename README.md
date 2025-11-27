@@ -2,11 +2,11 @@
 
 **Live site**
 
-- GitHub Pages: https://elhassansoussi.github.io/foireme/
+- GitHub Pages: https://elhassansoussi.github.io/BioLife.com/
 - Custom domain: https://www.foireme.com/
 
-[![Deploy to GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-deployed-brightgreen)](https://elhassansoussi.github.io/foireme/)
-[![Pages Deploy Status](https://github.com/ElhassanSoussi/foireme/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/ElhassanSoussi/foireme/actions/workflows/deploy-pages.yml)
+[![Deploy to GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-deployed-brightgreen)](https://elhassansoussi.github.io/BioLife.com/)
+[![Pages Deploy Status](https://github.com/ElhassanSoussi/BioLife.com/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/ElhassanSoussi/BioLife.com/actions/workflows/deploy-pages.yml)
 
 **Manual deploy**
 
