@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(posts => {
       const post = posts.find(p => p.slug === postSlug);
       if (post) {
-        document.title = `${post.title} — Foireme`;
+        document.title = `${post.title} — BioLife.com`;
         postContentContainer.innerHTML = `
           <h1 class="post-full__title">${post.title}</h1>
           <p class="post-full__meta">By ${post.author} on ${new Date(post.date).toLocaleDateString()}</p>

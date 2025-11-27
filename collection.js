@@ -126,7 +126,7 @@
       return 'badge';
     };
     const badges = (p.tags || []).map(t => `<span class="${badgeClass(t)}">${t}</span>`).join('');
-    const desc = (p.description && p.description.trim()) || (p.category ? `${p.category} essential for your routine.` : 'A Foireme favorite for every day.');
+    const desc = (p.description && p.description.trim()) || (p.category ? `${p.category} essential for your routine.` : 'A BioLife.com favorite for every day.');
 
     return `
       <article class="card" data-id="${p.id}" aria-labelledby="${p.id}-title">

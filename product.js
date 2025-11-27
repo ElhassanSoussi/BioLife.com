@@ -46,7 +46,7 @@
       }
 
       // Populate main fields
-      document.title = `${prod.name} — Foireme`;
+      document.title = `${prod.name} — BioLife.com`;
       const img = document.getElementById('prod-image');
       const title = document.getElementById('prod-title');
       const price = document.getElementById('prod-price');

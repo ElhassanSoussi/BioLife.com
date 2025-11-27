@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Foireme — Free Brush & More',
+  title: 'BioLife.com — Free Brush & More',
   description: 'Free Brush & More — modern, clean beauty essentials.'
 };
 

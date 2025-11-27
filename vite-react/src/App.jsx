@@ -11,7 +11,7 @@ export default function App(){
     <div>
       <header style={{ position: 'sticky', top: 0, background: '#fff', borderBottom: '1px solid #e8e6e1', zIndex: 10 }}>
         <div style={{ maxWidth: 1240, margin: '0 auto', padding: '0 24px', minHeight: 72, display: 'grid', gridTemplateColumns: 'auto 1fr auto', alignItems: 'center', gap: 20 }}>
-          <a href="#" style={{ fontWeight: 800, letterSpacing: '0.02em' }}>Foireme</a>
+          <a href="#" style={{ fontWeight: 800, letterSpacing: '0.02em' }}>BioLife.com</a>
           <nav aria-label="Primary">
             <ul style={{ display: 'flex', justifyContent: 'center', gap: 24 }}>
               {['Skincare','Makeup','Gifts','New Arrivals','Blog','Membership'].map(i => (

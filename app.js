@@ -146,7 +146,7 @@
     grid.innerHTML = products
       .map((p, i) => {
         const pid = p.id || `p${i + 1}`;
-        const desc = (p.description && p.description.trim()) || (p.category ? `${p.category} essential for your routine.` : 'A Foireme favorite for every day.');
+        const desc = (p.description && p.description.trim()) || (p.category ? `${p.category} essential for your routine.` : 'A BioLife.com favorite for every day.');
         const badges = (p.tags || [])
           .map((t) => `<span class="${badgeClass(t)}">${t}</span>`) 
           .join('');
