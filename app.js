@@ -164,9 +164,6 @@
                 <img src="${resolveImageUrl(p.image)}" alt="${p.alt || p.name}" width="600" height="600" loading="lazy" />
               </a>
               ${badges ? `<div class="badges">${badges}</div>` : ''}
-              <div class="quickadd">
-                <button class="btn btn--primary btn--sm js-add" data-id="${pid}" type="button" aria-label="Add ${p.name} to cart">Add to Cart</button>
-              </div>
             </div>
             <div class="card__body">
               <h3 id="${pid}-title" class="card__title"><a href="product.html?id=${pid}" class="card__link">${p.name}</a></h3>
@@ -176,10 +173,7 @@
                 <span class="rating__count">(${formatCount(p.reviews)})</span>
               </div>
               <div class="card__meta">${meta}</div>
-              <div class="card__actions">
-                <a class="btn btn--sm card__btn card__btn--buy" href="product.html?id=${pid}">Buy</a>
-                <button class="btn btn--sm btn--primary card__btn js-add" data-id="${pid}" type="button">Add to Cart</button>
-              </div>
+              <button class="btn btn--primary btn--sm card__add js-add" data-id="${pid}" type="button" aria-label="Add ${p.name} to cart">Add to Cart</button>
               ${swatches ? `<div class="swatches" role="list" aria-label="Available options">${swatches}</div>` : ''}
             </div>
           </article>

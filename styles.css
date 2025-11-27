@@ -541,29 +541,13 @@ body {
 .card__desc{ margin: 0 0 10px; color: var(--muted); font-size: 0.95rem; line-height: 1.5; min-height: 4.5em; }
 .card__meta{ color: var(--muted); font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
 .price{ color: var(--text); font-weight: 700; }
-.card__actions{
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: auto 0 10px;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-}
-.card__btn{
+.card__add{
+  width: 100%;
+  margin: 12px 0 8px;
   text-transform: none;
   letter-spacing: 0;
   font-weight: 700;
-  flex: 1 1 0;
   justify-content: center;
-}
-.card__btn--buy{
-  background: #c72c2c;
-  color: #fff;
-  border: 1px solid #c72c2c;
-}
-.card__btn--buy:hover{
-  background: #a92222;
-  border-color: #a92222;
 }
 
 /* Stars */
