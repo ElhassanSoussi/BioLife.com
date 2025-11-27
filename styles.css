@@ -531,6 +531,7 @@ body {
   padding: 14px 14px 16px;
   display: flex;
   flex-direction: column;
+  gap: 8px;
   height: 100%;
 }
 .card__title{
@@ -557,6 +558,9 @@ body {
   font-weight: 700;
   justify-content: center;
   margin-top: auto; /* keep buttons aligned across cards */
+  display: inline-flex;
+  align-items: center;
+  min-height: 42px;
 }
 
 /* Stars */
