@@ -180,6 +180,23 @@
         `;
       })
       .join('');
+
+    // Safety net: if a card renders without a button (older cache/markup), inject one so add-to-cart always shows
+    grid.querySelectorAll('.card').forEach(card => {
+      const hasBtn = card.querySelector('.js-add');
+      if (!hasBtn) {
+        const pid = card.getAttribute('data-id');
+        const body = card.querySelector('.card__body');
+        if (body && pid) {
+          const btn = document.createElement('button');
+          btn.className = 'btn btn--primary btn--sm card__add js-add';
+          btn.type = 'button';
+          btn.setAttribute('data-id', pid);
+          btn.textContent = 'Add to Cart';
+          body.appendChild(btn);
+        }
+      }
+    });
   }
 
   // Initial render
