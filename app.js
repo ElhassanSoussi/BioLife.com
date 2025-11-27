@@ -6,6 +6,13 @@
     global: { enabled: true, text: 'Free shipping over $50 · Use code FOIREME10', link: 'collection.html?cat=skincare', bg: '#111111', fg: '#ffffff', dismissible: true },
     homepage_hero: { enabled: true, title: 'Free Brush & More', subtitle: 'Upgrade your routine with our best-sellers for a flawless finish.', cta: { label: 'Shop Now', href: '#shop' } }
   };
+  // Local fallback products so homepage still works even when fetch fails (e.g., file://)
+  const defaultProducts = [
+    { id:'p-fdn', name:'Flawless Finish Foundation', price:42, image:'assets/photos/foundation.jpg', alt:'Foundation bottle', category:'Makeup', rating:4.8, reviews:182, tags:['Best Seller'], skin:['all'] },
+    { id:'p-ser', name:'Radiant Glow Serum', price:55, image:'assets/photos/serum.jpg', alt:'Serum bottle', category:'Skincare', rating:4.9, reviews:210, tags:['New'], skin:['all'] },
+    { id:'p-brush', name:'Pro Brush Set', price:65, image:'assets/photos/brush.jpg', alt:'Brush set', category:'Makeup', rating:4.7, reviews:134, tags:['Gift'], skin:['all'] },
+    { id:'p-toner', name:'Balance Toner', price:28, image:'assets/photos/toner.jpg', alt:'Toner bottle', category:'Skincare', rating:4.5, reviews:96, tags:[], skin:['all'] },
+  ];
   async function loadPromos(){
     if (window.FOIREME_PROMOS) return window.FOIREME_PROMOS;
     if (location.protocol === 'file:') return defaultPromos;
@@ -102,7 +109,8 @@
         console.warn(`Products failed to load from ${src}`, err);
       }
     }
-    allProducts = [];
+    // Final fallback: use baked-in defaults so the homepage stays functional
+    allProducts = normalizeProducts(defaultProducts);
     render(allProducts);
     reinit();
   }
